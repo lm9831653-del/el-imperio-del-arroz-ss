@@ -58,6 +58,20 @@
     /* NOTA */
     .nota-dom{background:var(--fondo-tarjeta);border:1px solid var(--borde);border-radius:var(--radio);padding:1rem;font-size:0.82rem;color:var(--texto-suave);line-height:1.6;margin-bottom:1.5rem;}
     .nota-dom strong{color:var(--texto);}
+
+    .cerrado-bloqueado{opacity:0.5;pointer-events:none;filter:grayscale(0.3);}
+
+    /* NOTIFICACIÓN DE HORARIO (estilo aviso de cookies) */
+    .toast-horario{position:fixed;left:1rem;right:1rem;bottom:1rem;margin:0 auto;max-width:420px;background:var(--blanco);border:1px solid var(--borde);border-radius:var(--radio-xl);box-shadow:var(--sombra-md);padding:1rem 1.1rem;display:flex;align-items:center;gap:0.75rem;z-index:999;transform:translateY(140%);transition:transform .35s ease;}
+    .toast-horario.mostrar{transform:translateY(0);}
+    .toast-horario__punto{flex-shrink:0;width:10px;height:10px;border-radius:50%;}
+    .toast-horario__punto--abierto{background:#3ecf6a;}
+    .toast-horario__punto--cerrado{background:#e05555;}
+    .toast-horario__texto{flex:1;font-size:0.85rem;color:var(--texto);line-height:1.4;}
+    .toast-horario__texto strong{font-weight:800;}
+    .toast-horario__cerrar{flex-shrink:0;background:none;border:none;cursor:pointer;color:var(--texto-suave);font-size:1.1rem;line-height:1;padding:0.25rem;}
+    .toast-horario__cerrar:hover{color:var(--texto);}
+    @media(min-width:640px){.toast-horario{left:auto;right:1.25rem;margin:0;}}
   </style>
 </head>
 <body>
@@ -94,6 +108,7 @@
   </div>
 
   <div class="contenedor">
+
     <div class="dom-layout">
 
       <!-- MENÚ SELECTOR -->
@@ -158,6 +173,12 @@
     </div>
   </div>
 </main>
+
+<div class="toast-horario" id="toast-horario">
+  <span class="toast-horario__punto" id="toast-horario-punto"></span>
+  <span class="toast-horario__texto" id="toast-horario-texto"></span>
+  <button type="button" class="toast-horario__cerrar" id="toast-horario-cerrar" aria-label="Cerrar aviso">✕</button>
+</div>
 
 <footer>
   <div class="contenedor">
@@ -406,6 +427,72 @@ document.getElementById('form-domicilio').addEventListener('submit', function(e)
   localStorage.removeItem('imperioCarrito');
   actualizarBadgeCarrito();
 });
+
+// =================== HORARIO DE ATENCIÓN ===================
+// Lunes a Sábado: 11:00 a.m. – 10:30 p.m. | Domingo: 12:00 p.m. – 10:30 p.m.
+function obtenerEstadoHorario() {
+  const ahoraBogota = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Bogota' }));
+  const dia = ahoraBogota.getDay(); // 0 = Domingo, 1-6 = Lunes a Sábado
+  const minutosAhora = ahoraBogota.getHours() * 60 + ahoraBogota.getMinutes();
+
+  const horaAperturaMin = (dia === 0) ? 12 * 60 : 11 * 60; // 12:00pm domingo, 11:00am resto
+  const horaCierreMin = 22 * 60 + 30; // 10:30pm todos los días
+
+  const abierto = minutosAhora >= horaAperturaMin && minutosAhora < horaCierreMin;
+
+  return { abierto };
+}
+
+function aplicarEstadoHorario() {
+  const { abierto } = obtenerEstadoHorario();
+
+  // Si está cerrado, se bloquea el pedido (contadores y botón de enviar)
+  if (!abierto) {
+    const panelPedido = document.querySelector('.panel-pedido');
+    const listaItems = document.getElementById('lista-items');
+    if (panelPedido) panelPedido.classList.add('cerrado-bloqueado');
+    if (listaItems) listaItems.classList.add('cerrado-bloqueado');
+
+    const btnEnviar = document.getElementById('btn-enviar');
+    if (btnEnviar) {
+      btnEnviar.disabled = true;
+      btnEnviar.textContent = 'Cerrado en este momento';
+    }
+  }
+
+  // Notificación tipo aviso de cookies: aparece una sola vez por sesión
+  if (!sessionStorage.getItem('avisoHorarioVisto')) {
+    const toast = document.getElementById('toast-horario');
+    const punto = document.getElementById('toast-horario-punto');
+    const texto = document.getElementById('toast-horario-texto');
+    if (toast && punto && texto) {
+      punto.classList.add(abierto ? 'toast-horario__punto--abierto' : 'toast-horario__punto--cerrado');
+      texto.innerHTML = abierto
+        ? '<strong>Abierto</strong> — puedes pedir a domicilio ahora mismo.'
+        : '<strong>Cerrado</strong> — en este momento no podemos recibir pedidos.';
+      setTimeout(() => toast.classList.add('mostrar'), 300);
+      sessionStorage.setItem('avisoHorarioVisto', '1');
+    }
+  }
+}
+
+const toastCerrarBtn = document.getElementById('toast-horario-cerrar');
+if (toastCerrarBtn) {
+  toastCerrarBtn.addEventListener('click', () => {
+    document.getElementById('toast-horario').classList.remove('mostrar');
+  });
+}
+
+// Bloqueo real: si de alguna forma se envía el formulario estando cerrado, se detiene el pedido
+document.getElementById('form-domicilio').addEventListener('submit', function(e) {
+  if (!obtenerEstadoHorario().abierto) {
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    alert('En este momento estamos cerrados. Nuestro horario es Lunes a Sábado 11:00 a.m. – 10:30 p.m. y Domingo 12:00 p.m. – 10:30 p.m.');
+  }
+}, true);
+
+aplicarEstadoHorario();
 
 // Hamburguesa nav
 const btn = document.getElementById('btn-menu');
