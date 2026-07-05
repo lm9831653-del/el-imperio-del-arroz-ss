@@ -34,6 +34,10 @@
     .precio-card__precio{font-weight:700;color:var(--primario);font-size:.9rem;white-space:nowrap;}
     .btn-xs{padding:.35rem .9rem;font-size:.78rem;border-radius:999px;background:var(--primario);color:var(--blanco);font-weight:600;display:inline-flex;align-items:center;gap:.3rem;transition:background .2s;white-space:nowrap;text-decoration:none;}
     .btn-xs:hover{background:var(--primario-claro);}
+    .cant-selector{display:flex;align-items:center;gap:.5rem;}
+    .btn-cant{width:26px;height:26px;flex-shrink:0;border-radius:50%;border:1px solid var(--borde);background:var(--blanco);color:var(--texto);font-size:1rem;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .15s,border-color .15s;}
+    .btn-cant:hover{background:var(--fondo-suave, #f4f4f4);border-color:var(--primario);}
+    .cant-valor{min-width:18px;text-align:center;font-weight:700;font-size:.9rem;color:var(--texto);}
 
     /* ── GRID LAYOUTS ── */
     .arroz-grid{display:grid;grid-template-columns:1fr;gap:3rem;}
@@ -128,7 +132,7 @@
                 <p class="precio-card__nombre">Personal</p>
                 <p class="precio-card__desc">Arroz, ¼ pollo Broaster o costilla de cerdo ahumada + papá francesa.</p>
               </div>
-              <div class="precio-card__acciones"><span class="precio-card__precio">$24.500</span><button class="btn-xs btn-agregar" data-cat="Arroz Chino" data-nombre="Personal">Agregar</button></div>
+              <div class="precio-card__acciones"><span class="precio-card__precio">$24.500</span><div class="cant-selector"><button type="button" class="btn-cant btn-cant-menos" aria-label="Restar cantidad">−</button><span class="cant-valor">1</span><button type="button" class="btn-cant btn-cant-mas" aria-label="Sumar cantidad">+</button></div><button class="btn-xs btn-agregar" data-cat="Arroz Chino" data-nombre="Personal">Agregar</button></div>
             </div>
             <div class="precio-card precio-card--conimg">
               <img src="imagenes/chino_especial.jpg" alt="Arroz Chino Especial" class="precio-card__img" />
@@ -136,7 +140,7 @@
                 <p class="precio-card__nombre">Especial</p>
                 <p class="precio-card__desc">Arroz, ¼ pollo Broaster o costilla ahumada o churrasco + papá francesa. <em>(Recomendado para 2)</em></p>
               </div>
-              <div class="precio-card__acciones"><span class="precio-card__precio">$33.000</span><button class="btn-xs btn-agregar" data-cat="Arroz Chino" data-nombre="Especial">Agregar</button></div>
+              <div class="precio-card__acciones"><span class="precio-card__precio">$33.000</span><div class="cant-selector"><button type="button" class="btn-cant btn-cant-menos" aria-label="Restar cantidad">−</button><span class="cant-valor">1</span><button type="button" class="btn-cant btn-cant-mas" aria-label="Sumar cantidad">+</button></div><button class="btn-xs btn-agregar" data-cat="Arroz Chino" data-nombre="Especial">Agregar</button></div>
             </div>
             <div class="precio-card precio-card--conimg">
               <img src="imagenes/chino_valenciano.jpg" alt="Arroz Chino Valenciano" class="precio-card__img" />
@@ -144,7 +148,7 @@
                 <p class="precio-card__nombre">Valenciano</p>
                 <p class="precio-card__desc">Caja de arroz mediana + ½ pollo Broaster o costilla ahumada + papá francesa + gaseosa 1.5 L Postobón. <em>(3–4 personas)</em></p>
               </div>
-              <div class="precio-card__acciones"><span class="precio-card__precio">$48.500</span><button class="btn-xs btn-agregar" data-cat="Arroz Chino" data-nombre="Valenciano">Agregar</button></div>
+              <div class="precio-card__acciones"><span class="precio-card__precio">$48.500</span><div class="cant-selector"><button type="button" class="btn-cant btn-cant-menos" aria-label="Restar cantidad">−</button><span class="cant-valor">1</span><button type="button" class="btn-cant btn-cant-mas" aria-label="Sumar cantidad">+</button></div><button class="btn-xs btn-agregar" data-cat="Arroz Chino" data-nombre="Valenciano">Agregar</button></div>
             </div>
             <div class="precio-card precio-card--conimg">
               <img src="imagenes/chino_mini_familiar.jpg" alt="Arroz Chino Mini familiar" class="precio-card__img" />
@@ -152,7 +156,7 @@
                 <p class="precio-card__nombre">Mini familiar</p>
                 <p class="precio-card__desc">Caja de arroz grande + ½ pollo Broaster o costilla ahumada + gaseosa 1.5 L Postobón. <em>(4–5 personas)</em></p>
               </div>
-              <div class="precio-card__acciones"><span class="precio-card__precio">$52.500</span><button class="btn-xs btn-agregar" data-cat="Arroz Chino" data-nombre="Mini familiar">Agregar</button></div>
+              <div class="precio-card__acciones"><span class="precio-card__precio">$52.500</span><div class="cant-selector"><button type="button" class="btn-cant btn-cant-menos" aria-label="Restar cantidad">−</button><span class="cant-valor">1</span><button type="button" class="btn-cant btn-cant-mas" aria-label="Sumar cantidad">+</button></div><button class="btn-xs btn-agregar" data-cat="Arroz Chino" data-nombre="Mini familiar">Agregar</button></div>
             </div>
             <div class="precio-card precio-card--conimg">
               <img src="imagenes/chino_familiar_completo.jpg" alt="Arroz Chino Familiar completo" class="precio-card__img" />
@@ -160,7 +164,7 @@
                 <p class="precio-card__nombre">Familiar completo</p>
                 <p class="precio-card__desc">Caja de arroz grande + 1 pollo Broaster entero o 2 porciones de costilla ahumada + papá francesa + gaseosa 1.5 L Postobón. <em>(6–8 personas)</em></p>
               </div>
-              <div class="precio-card__acciones"><span class="precio-card__precio">$64.000</span><button class="btn-xs btn-agregar" data-cat="Arroz Chino" data-nombre="Familiar completo">Agregar</button></div>
+              <div class="precio-card__acciones"><span class="precio-card__precio">$64.000</span><div class="cant-selector"><button type="button" class="btn-cant btn-cant-menos" aria-label="Restar cantidad">−</button><span class="cant-valor">1</span><button type="button" class="btn-cant btn-cant-mas" aria-label="Sumar cantidad">+</button></div><button class="btn-xs btn-agregar" data-cat="Arroz Chino" data-nombre="Familiar completo">Agregar</button></div>
             </div>
             <div class="precio-card precio-card--conimg">
               <img src="imagenes/chino_combo_casa.jpg" alt="Combo Valenciano de la Casa" class="precio-card__img" />
@@ -168,7 +172,7 @@
                 <p class="precio-card__nombre">Combo valenciano de la casa</p>
                 <p class="precio-card__desc">Caja de arroz mediana con camarones + medio pollo Broaster o costilla ahumada + papá francesa + gaseosa 1.5 L Postobón.</p>
               </div>
-              <div class="precio-card__acciones"><span class="precio-card__precio">$58.500</span><button class="btn-xs btn-agregar" data-cat="Arroz Chino" data-nombre="Combo valenciano de la casa">Agregar</button></div>
+              <div class="precio-card__acciones"><span class="precio-card__precio">$58.500</span><div class="cant-selector"><button type="button" class="btn-cant btn-cant-menos" aria-label="Restar cantidad">−</button><span class="cant-valor">1</span><button type="button" class="btn-cant btn-cant-mas" aria-label="Sumar cantidad">+</button></div><button class="btn-xs btn-agregar" data-cat="Arroz Chino" data-nombre="Combo valenciano de la casa">Agregar</button></div>
             </div>
           </div>
           <div><span class="adicion-chip">➕ Adición de camarones — $10.000</span></div>
@@ -188,7 +192,7 @@
                 <p class="precio-card__nombre">Personal</p>
                 <p class="precio-card__desc">Arroz, ¼ pollo Broaster o costilla de cerdo ahumada + papá francesa.</p>
               </div>
-              <div class="precio-card__acciones"><span class="precio-card__precio">$25.500</span><button class="btn-xs btn-agregar" data-cat="Arroz Paisa" data-nombre="Personal">Agregar</button></div>
+              <div class="precio-card__acciones"><span class="precio-card__precio">$25.500</span><div class="cant-selector"><button type="button" class="btn-cant btn-cant-menos" aria-label="Restar cantidad">−</button><span class="cant-valor">1</span><button type="button" class="btn-cant btn-cant-mas" aria-label="Sumar cantidad">+</button></div><button class="btn-xs btn-agregar" data-cat="Arroz Paisa" data-nombre="Personal">Agregar</button></div>
             </div>
             <div class="precio-card precio-card--conimg">
               <img src="imagenes/paisa_especial.jpg" alt="Arroz Paisa Especial" class="precio-card__img" />
@@ -196,7 +200,7 @@
                 <p class="precio-card__nombre">Especial</p>
                 <p class="precio-card__desc">Arroz, ¼ pollo Broaster o costilla ahumada o churrasco + papá francesa. <em>(Recomendado para 2)</em></p>
               </div>
-              <div class="precio-card__acciones"><span class="precio-card__precio">$34.000</span><button class="btn-xs btn-agregar" data-cat="Arroz Paisa" data-nombre="Especial">Agregar</button></div>
+              <div class="precio-card__acciones"><span class="precio-card__precio">$34.000</span><div class="cant-selector"><button type="button" class="btn-cant btn-cant-menos" aria-label="Restar cantidad">−</button><span class="cant-valor">1</span><button type="button" class="btn-cant btn-cant-mas" aria-label="Sumar cantidad">+</button></div><button class="btn-xs btn-agregar" data-cat="Arroz Paisa" data-nombre="Especial">Agregar</button></div>
             </div>
             <div class="precio-card precio-card--conimg">
               <img src="imagenes/paisa_valenciano.jpg" alt="Arroz Paisa Valenciano" class="precio-card__img" />
@@ -204,7 +208,7 @@
                 <p class="precio-card__nombre">Valenciano</p>
                 <p class="precio-card__desc">Caja de arroz mediana + ½ pollo Broaster o costilla ahumada + papá francesa + gaseosa 1.5 L Postobón. <em>(3–4 personas)</em></p>
               </div>
-              <div class="precio-card__acciones"><span class="precio-card__precio">$51.000</span><button class="btn-xs btn-agregar" data-cat="Arroz Paisa" data-nombre="Valenciano">Agregar</button></div>
+              <div class="precio-card__acciones"><span class="precio-card__precio">$51.000</span><div class="cant-selector"><button type="button" class="btn-cant btn-cant-menos" aria-label="Restar cantidad">−</button><span class="cant-valor">1</span><button type="button" class="btn-cant btn-cant-mas" aria-label="Sumar cantidad">+</button></div><button class="btn-xs btn-agregar" data-cat="Arroz Paisa" data-nombre="Valenciano">Agregar</button></div>
             </div>
             <div class="precio-card precio-card--conimg">
               <img src="imagenes/paisa_mini_familiar.jpg" alt="Arroz Paisa Mini familiar" class="precio-card__img" />
@@ -212,7 +216,7 @@
                 <p class="precio-card__nombre">Mini familiar</p>
                 <p class="precio-card__desc">Caja de arroz grande + ½ pollo Broaster o costilla ahumada + gaseosa 1.5 L Postobón. <em>(4–5 personas)</em></p>
               </div>
-              <div class="precio-card__acciones"><span class="precio-card__precio">$57.000</span><button class="btn-xs btn-agregar" data-cat="Arroz Paisa" data-nombre="Mini familiar">Agregar</button></div>
+              <div class="precio-card__acciones"><span class="precio-card__precio">$57.000</span><div class="cant-selector"><button type="button" class="btn-cant btn-cant-menos" aria-label="Restar cantidad">−</button><span class="cant-valor">1</span><button type="button" class="btn-cant btn-cant-mas" aria-label="Sumar cantidad">+</button></div><button class="btn-xs btn-agregar" data-cat="Arroz Paisa" data-nombre="Mini familiar">Agregar</button></div>
             </div>
             <div class="precio-card precio-card--conimg">
               <img src="imagenes/paisa_familiar_completo.jpg" alt="Arroz Paisa Familiar completo" class="precio-card__img" />
@@ -220,7 +224,7 @@
                 <p class="precio-card__nombre">Familiar completo</p>
                 <p class="precio-card__desc">Caja de arroz grande + 1 pollo Broaster entero o 2 porciones de costilla ahumada + papá francesa + gaseosa 1.5 L Postobón. <em>(6–8 personas)</em></p>
               </div>
-              <div class="precio-card__acciones"><span class="precio-card__precio">$71.000</span><button class="btn-xs btn-agregar" data-cat="Arroz Paisa" data-nombre="Familiar completo">Agregar</button></div>
+              <div class="precio-card__acciones"><span class="precio-card__precio">$71.000</span><div class="cant-selector"><button type="button" class="btn-cant btn-cant-menos" aria-label="Restar cantidad">−</button><span class="cant-valor">1</span><button type="button" class="btn-cant btn-cant-mas" aria-label="Sumar cantidad">+</button></div><button class="btn-xs btn-agregar" data-cat="Arroz Paisa" data-nombre="Familiar completo">Agregar</button></div>
             </div>
           </div>
         </div>
@@ -239,7 +243,7 @@
             <p class="precio-card__nombre">Medio sencillo</p>
             <p class="precio-card__desc">½ pollo Broaster + papa francesa o patacón y arepa.</p>
           </div>
-          <div class="precio-card__acciones"><span class="precio-card__precio">$19.500</span><button class="btn-xs btn-agregar" data-cat="Pollo Broaster" data-nombre="Medio sencillo">Agregar</button></div>
+          <div class="precio-card__acciones"><span class="precio-card__precio">$19.500</span><div class="cant-selector"><button type="button" class="btn-cant btn-cant-menos" aria-label="Restar cantidad">−</button><span class="cant-valor">1</span><button type="button" class="btn-cant btn-cant-mas" aria-label="Sumar cantidad">+</button></div><button class="btn-xs btn-agregar" data-cat="Pollo Broaster" data-nombre="Medio sencillo">Agregar</button></div>
         </div>
         <div class="precio-card precio-card--conimg reveal reveal--2">
           <img src="imagenes/pollo_medio_combo.jpg" alt="Pollo Broaster medio en combo" class="precio-card__img" />
@@ -247,7 +251,7 @@
             <p class="precio-card__nombre">Medio en combo</p>
             <p class="precio-card__desc">½ pollo Broaster + papa francesa, patacón, arepa + gaseosa Postobón 1.5 L.</p>
           </div>
-          <div class="precio-card__acciones"><span class="precio-card__precio">$28.000</span><button class="btn-xs btn-agregar" data-cat="Pollo Broaster" data-nombre="Medio en combo">Agregar</button></div>
+          <div class="precio-card__acciones"><span class="precio-card__precio">$28.000</span><div class="cant-selector"><button type="button" class="btn-cant btn-cant-menos" aria-label="Restar cantidad">−</button><span class="cant-valor">1</span><button type="button" class="btn-cant btn-cant-mas" aria-label="Sumar cantidad">+</button></div><button class="btn-xs btn-agregar" data-cat="Pollo Broaster" data-nombre="Medio en combo">Agregar</button></div>
         </div>
         <div class="precio-card precio-card--conimg reveal reveal--3">
           <img src="imagenes/pollo_completo_sencillo.jpg" alt="Pollo Broaster completo sencillo" class="precio-card__img" />
@@ -255,7 +259,7 @@
             <p class="precio-card__nombre">Completo sencillo</p>
             <p class="precio-card__desc">Pollo Broaster entero + papa francesa o patacón y arepa.</p>
           </div>
-          <div class="precio-card__acciones"><span class="precio-card__precio">$35.000</span><button class="btn-xs btn-agregar" data-cat="Pollo Broaster" data-nombre="Completo sencillo">Agregar</button></div>
+          <div class="precio-card__acciones"><span class="precio-card__precio">$35.000</span><div class="cant-selector"><button type="button" class="btn-cant btn-cant-menos" aria-label="Restar cantidad">−</button><span class="cant-valor">1</span><button type="button" class="btn-cant btn-cant-mas" aria-label="Sumar cantidad">+</button></div><button class="btn-xs btn-agregar" data-cat="Pollo Broaster" data-nombre="Completo sencillo">Agregar</button></div>
         </div>
         <div class="precio-card precio-card--conimg reveal reveal--4">
           <img src="imagenes/pollo_completo_combo.jpg" alt="Pollo Broaster completo en combo" class="precio-card__img" />
@@ -263,7 +267,7 @@
             <p class="precio-card__nombre">Completo en combo</p>
             <p class="precio-card__desc">Pollo Broaster entero + papa francesa, patacón, arepa + gaseosa Postobón 1.5 L.</p>
           </div>
-          <div class="precio-card__acciones"><span class="precio-card__precio">$45.500</span><button class="btn-xs btn-agregar" data-cat="Pollo Broaster" data-nombre="Completo en combo">Agregar</button></div>
+          <div class="precio-card__acciones"><span class="precio-card__precio">$45.500</span><div class="cant-selector"><button type="button" class="btn-cant btn-cant-menos" aria-label="Restar cantidad">−</button><span class="cant-valor">1</span><button type="button" class="btn-cant btn-cant-mas" aria-label="Sumar cantidad">+</button></div><button class="btn-xs btn-agregar" data-cat="Pollo Broaster" data-nombre="Completo en combo">Agregar</button></div>
         </div>
       </div>
     </section>
@@ -279,7 +283,7 @@
             <p class="precio-card__nombre">Combo</p>
             <p class="precio-card__desc">Carne de res, queso, papa chip y vegetales + papá francesa y gaseosa.</p>
           </div>
-          <div class="precio-card__acciones"><span class="precio-card__precio">$17.000</span><button class="btn-xs btn-agregar" data-cat="Hamburguesas" data-nombre="Combo">Agregar</button></div>
+          <div class="precio-card__acciones"><span class="precio-card__precio">$17.000</span><div class="cant-selector"><button type="button" class="btn-cant btn-cant-menos" aria-label="Restar cantidad">−</button><span class="cant-valor">1</span><button type="button" class="btn-cant btn-cant-mas" aria-label="Sumar cantidad">+</button></div><button class="btn-xs btn-agregar" data-cat="Hamburguesas" data-nombre="Combo">Agregar</button></div>
         </div>
         <div class="precio-card precio-card--conimg reveal reveal--2">
           <img src="imagenes/hamburguesa_doble.jpg" alt="Hamburguesa Doble carne" class="precio-card__img" />
@@ -287,7 +291,7 @@
             <p class="precio-card__nombre">Doble carne</p>
             <p class="precio-card__desc">Carne de res, doble queso, papa chip y vegetales.</p>
           </div>
-          <div class="precio-card__acciones"><span class="precio-card__precio">$15.000</span><button class="btn-xs btn-agregar" data-cat="Hamburguesas" data-nombre="Doble carne">Agregar</button></div>
+          <div class="precio-card__acciones"><span class="precio-card__precio">$15.000</span><div class="cant-selector"><button type="button" class="btn-cant btn-cant-menos" aria-label="Restar cantidad">−</button><span class="cant-valor">1</span><button type="button" class="btn-cant btn-cant-mas" aria-label="Sumar cantidad">+</button></div><button class="btn-xs btn-agregar" data-cat="Hamburguesas" data-nombre="Doble carne">Agregar</button></div>
         </div>
         <div class="precio-card precio-card--conimg reveal reveal--3">
           <img src="imagenes/hamburguesa_picante.jpg" alt="Hamburguesa Picante" class="precio-card__img" />
@@ -295,7 +299,7 @@
             <p class="precio-card__nombre">Picante</p>
             <p class="precio-card__desc">Carne de res, jalapeños, queso, papa chip y vegetales.</p>
           </div>
-          <div class="precio-card__acciones"><span class="precio-card__precio">$13.000</span><button class="btn-xs btn-agregar" data-cat="Hamburguesas" data-nombre="Picante">Agregar</button></div>
+          <div class="precio-card__acciones"><span class="precio-card__precio">$13.000</span><div class="cant-selector"><button type="button" class="btn-cant btn-cant-menos" aria-label="Restar cantidad">−</button><span class="cant-valor">1</span><button type="button" class="btn-cant btn-cant-mas" aria-label="Sumar cantidad">+</button></div><button class="btn-xs btn-agregar" data-cat="Hamburguesas" data-nombre="Picante">Agregar</button></div>
         </div>
         <div class="precio-card precio-card--conimg reveal reveal--4">
           <img src="imagenes/hamburguesa_ranchera.jpg" alt="Hamburguesa Ranchera" class="precio-card__img" />
@@ -303,7 +307,7 @@
             <p class="precio-card__nombre">Ranchera</p>
             <p class="precio-card__desc">Carne de res, champiñón, maíz tierno, doble queso, papa chip y vegetales.</p>
           </div>
-          <div class="precio-card__acciones"><span class="precio-card__precio">$15.000</span><button class="btn-xs btn-agregar" data-cat="Hamburguesas" data-nombre="Ranchera">Agregar</button></div>
+          <div class="precio-card__acciones"><span class="precio-card__precio">$15.000</span><div class="cant-selector"><button type="button" class="btn-cant btn-cant-menos" aria-label="Restar cantidad">−</button><span class="cant-valor">1</span><button type="button" class="btn-cant btn-cant-mas" aria-label="Sumar cantidad">+</button></div><button class="btn-xs btn-agregar" data-cat="Hamburguesas" data-nombre="Ranchera">Agregar</button></div>
         </div>
       </div>
     </section>
@@ -319,7 +323,7 @@
             <p class="precio-card__nombre">Bandeja con pollo</p>
             <p class="precio-card__desc">Arroz, papa francesa, patacón, yuca y ensalada.</p>
           </div>
-          <div class="precio-card__acciones"><span class="precio-card__precio">$22.500</span><button class="btn-xs btn-agregar" data-cat="Platos a la Carta" data-nombre="Bandeja con pollo">Agregar</button></div>
+          <div class="precio-card__acciones"><span class="precio-card__precio">$22.500</span><div class="cant-selector"><button type="button" class="btn-cant btn-cant-menos" aria-label="Restar cantidad">−</button><span class="cant-valor">1</span><button type="button" class="btn-cant btn-cant-mas" aria-label="Sumar cantidad">+</button></div><button class="btn-xs btn-agregar" data-cat="Platos a la Carta" data-nombre="Bandeja con pollo">Agregar</button></div>
         </div>
         <div class="precio-card precio-card--conimg reveal reveal--2">
           <img src="imagenes/churrasco.jpg" alt="Churrasco" class="precio-card__img" />
@@ -327,7 +331,7 @@
             <p class="precio-card__nombre">Churrasco</p>
             <p class="precio-card__desc">Papa francesa, patacón, yuca y ensalada.</p>
           </div>
-          <div class="precio-card__acciones"><span class="precio-card__precio">$27.500</span><button class="btn-xs btn-agregar" data-cat="Platos a la Carta" data-nombre="Churrasco">Agregar</button></div>
+          <div class="precio-card__acciones"><span class="precio-card__precio">$27.500</span><div class="cant-selector"><button type="button" class="btn-cant btn-cant-menos" aria-label="Restar cantidad">−</button><span class="cant-valor">1</span><button type="button" class="btn-cant btn-cant-mas" aria-label="Sumar cantidad">+</button></div><button class="btn-xs btn-agregar" data-cat="Platos a la Carta" data-nombre="Churrasco">Agregar</button></div>
         </div>
         <div class="precio-card precio-card--conimg reveal reveal--3">
           <img src="imagenes/mojarra.jpg" alt="Mojarra" class="precio-card__img" />
@@ -335,7 +339,7 @@
             <p class="precio-card__nombre">Mojarra</p>
             <p class="precio-card__desc">Arroz, papa francesa, patacón, yuca y ensalada.</p>
           </div>
-          <div class="precio-card__acciones"><span class="precio-card__precio">$27.500</span><button class="btn-xs btn-agregar" data-cat="Platos a la Carta" data-nombre="Mojarra">Agregar</button></div>
+          <div class="precio-card__acciones"><span class="precio-card__precio">$27.500</span><div class="cant-selector"><button type="button" class="btn-cant btn-cant-menos" aria-label="Restar cantidad">−</button><span class="cant-valor">1</span><button type="button" class="btn-cant btn-cant-mas" aria-label="Sumar cantidad">+</button></div><button class="btn-xs btn-agregar" data-cat="Platos a la Carta" data-nombre="Mojarra">Agregar</button></div>
         </div>
         <div class="precio-card precio-card--conimg reveal reveal--4">
           <img src="imagenes/costillas.jpg" alt="Costillas" class="precio-card__img" />
@@ -343,7 +347,7 @@
             <p class="precio-card__nombre">Costillas</p>
             <p class="precio-card__desc">Arroz, papa francesa, patacón, yuca y ensalada.</p>
           </div>
-          <div class="precio-card__acciones"><span class="precio-card__precio">$27.500</span><button class="btn-xs btn-agregar" data-cat="Platos a la Carta" data-nombre="Costillas">Agregar</button></div>
+          <div class="precio-card__acciones"><span class="precio-card__precio">$27.500</span><div class="cant-selector"><button type="button" class="btn-cant btn-cant-menos" aria-label="Restar cantidad">−</button><span class="cant-valor">1</span><button type="button" class="btn-cant btn-cant-mas" aria-label="Sumar cantidad">+</button></div><button class="btn-xs btn-agregar" data-cat="Platos a la Carta" data-nombre="Costillas">Agregar</button></div>
         </div>
         <div class="precio-card precio-card--conimg reveal reveal--5">
           <img src="imagenes/pechuga_plancha.jpg" alt="Pechuga a la plancha" class="precio-card__img" />
@@ -351,7 +355,7 @@
             <p class="precio-card__nombre">Pechuga a la plancha</p>
             <p class="precio-card__desc">Arroz, papa francesa, patacón, yuca y ensalada.</p>
           </div>
-          <div class="precio-card__acciones"><span class="precio-card__precio">$27.500</span><button class="btn-xs btn-agregar" data-cat="Platos a la Carta" data-nombre="Pechuga a la plancha">Agregar</button></div>
+          <div class="precio-card__acciones"><span class="precio-card__precio">$27.500</span><div class="cant-selector"><button type="button" class="btn-cant btn-cant-menos" aria-label="Restar cantidad">−</button><span class="cant-valor">1</span><button type="button" class="btn-cant btn-cant-mas" aria-label="Sumar cantidad">+</button></div><button class="btn-xs btn-agregar" data-cat="Platos a la Carta" data-nombre="Pechuga a la plancha">Agregar</button></div>
         </div>
         <div class="precio-card precio-card--conimg reveal reveal--6">
           <img src="imagenes/pechuga_gratinada.jpg" alt="Pechuga gratinada" class="precio-card__img" />
@@ -359,7 +363,7 @@
             <p class="precio-card__nombre">Pechuga gratinada</p>
             <p class="precio-card__desc">Arroz, papa francesa, patacón, yuca y ensalada.</p>
           </div>
-          <div class="precio-card__acciones"><span class="precio-card__precio">$30.000</span><button class="btn-xs btn-agregar" data-cat="Platos a la Carta" data-nombre="Pechuga gratinada">Agregar</button></div>
+          <div class="precio-card__acciones"><span class="precio-card__precio">$30.000</span><div class="cant-selector"><button type="button" class="btn-cant btn-cant-menos" aria-label="Restar cantidad">−</button><span class="cant-valor">1</span><button type="button" class="btn-cant btn-cant-mas" aria-label="Sumar cantidad">+</button></div><button class="btn-xs btn-agregar" data-cat="Platos a la Carta" data-nombre="Pechuga gratinada">Agregar</button></div>
         </div>
       </div>
     </section>
@@ -375,7 +379,7 @@
             <p class="precio-card__nombre">Jugo Natural</p>
             <p class="precio-card__desc">En agua o en leche. Sabores del día.</p>
           </div>
-          <div class="precio-card__acciones"><span class="precio-card__precio">$5.000</span><button class="btn-xs btn-agregar" data-cat="Bebidas" data-nombre="Jugo Natural">Agregar</button></div>
+          <div class="precio-card__acciones"><span class="precio-card__precio">$5.000</span><div class="cant-selector"><button type="button" class="btn-cant btn-cant-menos" aria-label="Restar cantidad">−</button><span class="cant-valor">1</span><button type="button" class="btn-cant btn-cant-mas" aria-label="Sumar cantidad">+</button></div><button class="btn-xs btn-agregar" data-cat="Bebidas" data-nombre="Jugo Natural">Agregar</button></div>
         </div>
         <div class="precio-card precio-card--conimg reveal reveal--2" style="flex-wrap:wrap;">
           <img src="imagenes/gaseosa_personal.jpg" alt="Gaseosa personal" class="precio-card__img" />
@@ -383,7 +387,7 @@
             <p class="precio-card__nombre">Gaseosa personal</p>
             <p class="precio-card__desc">Postobón 400 ml. Variedad de sabores.</p>
           </div>
-          <div class="precio-card__acciones"><span class="precio-card__precio">$3.500</span><button class="btn-xs btn-agregar" data-cat="Bebidas" data-nombre="Gaseosa personal">Agregar</button></div>
+          <div class="precio-card__acciones"><span class="precio-card__precio">$3.500</span><div class="cant-selector"><button type="button" class="btn-cant btn-cant-menos" aria-label="Restar cantidad">−</button><span class="cant-valor">1</span><button type="button" class="btn-cant btn-cant-mas" aria-label="Sumar cantidad">+</button></div><button class="btn-xs btn-agregar" data-cat="Bebidas" data-nombre="Gaseosa personal">Agregar</button></div>
         </div>
         <div class="precio-card precio-card--conimg reveal reveal--3" style="flex-wrap:wrap;">
           <img src="imagenes/agua_botella.jpg" alt="Agua en botella" class="precio-card__img" />
@@ -391,7 +395,7 @@
             <p class="precio-card__nombre">Agua en botella</p>
             <p class="precio-card__desc">600 ml, sin gas.</p>
           </div>
-          <div class="precio-card__acciones"><span class="precio-card__precio">$3.000</span><button class="btn-xs btn-agregar" data-cat="Bebidas" data-nombre="Agua en botella">Agregar</button></div>
+          <div class="precio-card__acciones"><span class="precio-card__precio">$3.000</span><div class="cant-selector"><button type="button" class="btn-cant btn-cant-menos" aria-label="Restar cantidad">−</button><span class="cant-valor">1</span><button type="button" class="btn-cant btn-cant-mas" aria-label="Sumar cantidad">+</button></div><button class="btn-xs btn-agregar" data-cat="Bebidas" data-nombre="Agua en botella">Agregar</button></div>
         </div>
       </div>
     </section>
