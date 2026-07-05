@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Menú — El Imperio del Arroz S&S</title>
+  <meta name="description" content="Menú completo de El Imperio del Arroz S&S: Arroz Chino, Arroz Paisa, Pollo Broaster, Hamburguesas y Platos a la Carta. Bosa, Bogotá." />
+  <link rel="icon" type="image/png" href="imagenes/favicon.png" />
+  <link rel="stylesheet" href="estilos.css" />
+  <style>
+    /* ── TABS ── */
+    .tabs-barra{position:sticky;top:64px;z-index:50;background:rgba(249,246,242,0.97);backdrop-filter:blur(10px);border-bottom:1px solid var(--borde);box-shadow:0 2px 8px rgba(0,0,0,0.06);}
+    .tabs-barra__inner{display:flex;gap:.5rem;padding:.85rem 0;overflow-x:auto;scrollbar-width:none;}
+    .tabs-barra__inner::-webkit-scrollbar{display:none;}
+    .tab-btn{flex-shrink:0;padding:.5rem 1.1rem;border-radius:999px;border:none;background:var(--fondo-tarjeta);color:var(--texto);font-family:var(--fuente-cuerpo);font-weight:600;font-size:.875rem;cursor:pointer;transition:background .2s,color .2s;white-space:nowrap;}
+    .tab-btn.activo{background:var(--primario);color:var(--blanco);}
+    .tab-btn:hover:not(.activo){background:var(--borde);}
+
+    /* ── SECCIONES ── */
+    .menu-seccion{margin-bottom:5rem;scroll-margin-top:140px;}
+    .seccion-titulo{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;}
+    .seccion-titulo h2{font-family:var(--fuente-display);font-weight:800;font-size:clamp(1.5rem,3vw,2.25rem);color:var(--primario);white-space:nowrap;}
+    .seccion-titulo hr{flex:1;border:none;border-top:1px solid var(--borde);}
+
+    /* ── IMAGEN CABECERA SECCIÓN ── */
+    .cat-img{width:100%;height:220px;object-fit:cover;border-radius:var(--radio-lg);margin-bottom:1.5rem;box-shadow:var(--sombra-md);}
+
+    /* ── CARDS PRECIO ── */
+    .precio-card{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;background:var(--blanco);border:1px solid var(--borde);border-radius:var(--radio);padding:1rem 1.25rem;}
+    .precio-card__info{flex:1;}
+    .precio-card__nombre{font-weight:700;font-size:.95rem;}
+    .precio-card__desc{font-size:.8rem;color:var(--texto-suave);line-height:1.5;margin-top:.25rem;}
+    .precio-card__acciones{display:flex;flex-direction:column;align-items:flex-end;gap:.5rem;flex-shrink:0;}
+    .precio-card__precio{font-weight:700;color:var(--primario);font-size:.9rem;white-space:nowrap;}
+    .btn-xs{padding:.35rem .9rem;font-size:.78rem;border-radius:999px;background:var(--primario);color:var(--blanco);font-weight:600;display:inline-flex;align-items:center;gap:.3rem;transition:background .2s;white-space:nowrap;text-decoration:none;}
+    .btn-xs:hover{background:var(--primario-claro);}
+
+    /* ── GRID LAYOUTS ── */
+    .arroz-grid{display:grid;grid-template-columns:1fr;gap:3rem;}
+    @media(min-width:1024px){.arroz-grid{grid-template-columns:1fr 1fr;}}
+    .arroz-bloque__img-wrap{margin-bottom:1.25rem;}
+    .arroz-bloque__img{width:100%;height:200px;object-fit:cover;border-radius:var(--radio-lg);box-shadow:var(--sombra-md);}
+    .arroz-bloque__subtitulo{font-family:var(--fuente-display);font-weight:800;font-size:1.35rem;color:var(--primario);margin-bottom:.35rem;}
+    .arroz-bloque__nota{font-size:.78rem;color:var(--texto-suave);line-height:1.5;margin-bottom:1rem;padding:.65rem .9rem;background:var(--fondo-tarjeta);border-radius:var(--radio);border-left:3px solid var(--primario);}
+    .lista-precios{display:flex;flex-direction:column;gap:.65rem;}
+    .simple-grid{display:grid;grid-template-columns:1fr;gap:.65rem;}
+    @media(min-width:640px){.simple-grid{grid-template-columns:1fr 1fr;}}
+
+    /* ── BEBIDAS GRID ── */
+    .bebidas-grid{display:grid;grid-template-columns:1fr;gap:.65rem;}
+    @media(min-width:480px){.bebidas-grid{grid-template-columns:1fr 1fr 1fr;}}
+
+    /* ── ADICIÓN ── */
+    .adicion-chip{display:inline-flex;align-items:center;gap:.5rem;background:var(--fondo-tarjeta);border:1px dashed var(--primario);border-radius:999px;padding:.45rem 1rem;font-size:.8rem;font-weight:600;color:var(--primario);margin-top:.85rem;}
+
+    /* ── IMÁGENES AMPLIABLES / LIGHTBOX ── */
+    .img-ampliable{cursor:zoom-in;transition:opacity .15s;}
+    .img-ampliable:hover{opacity:.88;}
+    .lightbox{position:fixed;inset:0;background:rgba(0,0,0,0.88);display:flex;align-items:center;justify-content:center;padding:2rem;z-index:1000;opacity:0;visibility:hidden;transition:opacity .2s;}
+    .lightbox--abierto{opacity:1;visibility:visible;}
+    .lightbox__img{max-width:100%;max-height:90vh;border-radius:var(--radio-lg);box-shadow:0 10px 40px rgba(0,0,0,0.5);}
+    .lightbox__cerrar{position:absolute;top:1.25rem;right:1.5rem;width:44px;height:44px;border-radius:50%;border:none;background:rgba(255,255,255,0.15);color:#fff;font-size:1.5rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s;}
+    .lightbox__cerrar:hover{background:rgba(255,255,255,0.3);}
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="contenedor nav__inner">
+    <a href="index.html" class="nav__logo"><img src="imagenes/logo.png" alt="Logo El Imperio del Arroz S&amp;S" /><span>El Imperio del Arroz S&amp;S</span></a>
+    <div class="nav__links">
+      <a href="index.html"     class="nav__link">Inicio</a>
+      <a href="menu.html"      class="nav__link nav__link--activo">Menú</a>
+      <a href="ubicacion.html" class="nav__link">Ubicación</a>
+      <a href="nosotros.html"  class="nav__link">Nosotros</a>
+      <a href="domicilio.html" class="nav__link">Domicilio<span class="carrito-badge">0</span></a>
+    </div>
+    <button class="nav__hamburgesa" id="btn-menu-nav" aria-label="Abrir menú">
+      <svg id="icono-menu" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      <svg id="icono-x" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="display:none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="nav__movil contenedor" id="nav-movil">
+    <a href="index.html"     class="nav__movil-link">Inicio</a>
+    <a href="menu.html"      class="nav__movil-link nav__movil-link--activo">Menú</a>
+    <a href="ubicacion.html" class="nav__movil-link">Ubicación</a>
+    <a href="nosotros.html"  class="nav__movil-link">Nosotros</a>
+    <a href="domicilio.html" class="nav__movil-link">Domicilio<span class="carrito-badge">0</span></a>
+  </div>
+</nav>
+
+<main>
+  <div class="cabecera-pagina cabecera-pagina--foto cabecera-pagina--menu">
+    <h1>Nuestro Menú</h1>
+    <p>Comida de verdad, hecha con amor. Descubre por qué todo el barrio habla de nuestra sazón.</p>
+  </div>
+
+  <div class="tabs-barra">
+    <div class="contenedor">
+      <div class="tabs-barra__inner">
+        <button class="tab-btn activo" data-target="arroces">Arroces</button>
+        <button class="tab-btn" data-target="pollo">Pollo Broaster</button>
+        <button class="tab-btn" data-target="hamburguesas">Hamburguesas</button>
+        <button class="tab-btn" data-target="carta">Platos a la Carta</button>
+        <button class="tab-btn" data-target="bebidas">Bebidas</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="contenedor" style="padding-top:3rem;padding-bottom:4rem;">
+
+    <!-- ═══════════════ ARROCES ═══════════════ -->
+    <section class="menu-seccion" id="arroces">
+      <div class="seccion-titulo"><h2>Arroces</h2><hr /></div>
+      <div class="arroz-grid">
+
+        <!-- ARROZ CHINO -->
+        <div class="reveal">
+          <div class="arroz-bloque__img-wrap">
+            <img src="imagenes/arroz_chino.jpg" alt="Arroz Chino El Imperio" class="arroz-bloque__img" />
+          </div>
+          <p class="arroz-bloque__subtitulo">Arroz Chino</p>
+          <p class="arroz-bloque__nota">Todo arroz contiene: carne de cerdo, pollo, jamón y huevo de codorniz.</p>
+          <div class="lista-precios">
+            <div class="precio-card precio-card--conimg">
+              <img src="imagenes/chino_personal.jpg" alt="Arroz Chino Personal" class="precio-card__img" />
+              <div class="precio-card__info">
+                <p class="precio-card__nombre">Personal</p>
+                <p class="precio-card__desc">Arroz, ¼ pollo Broaster o costilla de cerdo ahumada + papá francesa.</p>
+              </div>
+              <div class="precio-card__acciones"><span class="precio-card__precio">$24.500</span><button class="btn-xs btn-agregar" data-cat="Arroz Chino" data-nombre="Personal">Agregar</button></div>
+            </div>
+            <div class="precio-card precio-card--conimg">
+              <img src="imagenes/chino_especial.jpg" alt="Arroz Chino Especial" class="precio-card__img" />
+              <div class="precio-card__info">
+                <p class="precio-card__nombre">Especial</p>
+                <p class="precio-card__desc">Arroz, ¼ pollo Broaster o costilla ahumada o churrasco + papá francesa. <em>(Recomendado para 2)</em></p>
+              </div>
+              <div class="precio-card__acciones"><span class="precio-card__precio">$33.000</span><button class="btn-xs btn-agregar" data-cat="Arroz Chino" data-nombre="Especial">Agregar</button></div>
+            </div>
+            <div class="precio-card precio-card--conimg">
+              <img src="imagenes/chino_valenciano.jpg" alt="Arroz Chino Valenciano" class="precio-card__img" />
+              <div class="precio-card__info">
+                <p class="precio-card__nombre">Valenciano</p>
+                <p class="precio-card__desc">Caja de arroz mediana + ½ pollo Broaster o costilla ahumada + papá francesa + gaseosa 1.5 L Postobón. <em>(3–4 personas)</em></p>
+              </div>
+              <div class="precio-card__acciones"><span class="precio-card__precio">$48.500</span><button class="btn-xs btn-agregar" data-cat="Arroz Chino" data-nombre="Valenciano">Agregar</button></div>
+            </div>
+            <div class="precio-card precio-card--conimg">
+              <img src="imagenes/chino_mini_familiar.jpg" alt="Arroz Chino Mini familiar" class="precio-card__img" />
+              <div class="precio-card__info">
+                <p class="precio-card__nombre">Mini familiar</p>
+                <p class="precio-card__desc">Caja de arroz grande + ½ pollo Broaster o costilla ahumada + gaseosa 1.5 L Postobón. <em>(4–5 personas)</em></p>
+              </div>
+              <div class="precio-card__acciones"><span class="precio-card__precio">$52.500</span><button class="btn-xs btn-agregar" data-cat="Arroz Chino" data-nombre="Mini familiar">Agregar</button></div>
+            </div>
+            <div class="precio-card precio-card--conimg">
+              <img src="imagenes/chino_familiar_completo.jpg" alt="Arroz Chino Familiar completo" class="precio-card__img" />
+              <div class="precio-card__info">
+                <p class="precio-card__nombre">Familiar completo</p>
+                <p class="precio-card__desc">Caja de arroz grande + 1 pollo Broaster entero o 2 porciones de costilla ahumada + papá francesa + gaseosa 1.5 L Postobón. <em>(6–8 personas)</em></p>
+              </div>
+              <div class="precio-card__acciones"><span class="precio-card__precio">$64.000</span><button class="btn-xs btn-agregar" data-cat="Arroz Chino" data-nombre="Familiar completo">Agregar</button></div>
+            </div>
+            <div class="precio-card precio-card--conimg">
+              <img src="imagenes/chino_combo_casa.jpg" alt="Combo Valenciano de la Casa" class="precio-card__img" />
+              <div class="precio-card__info">
+                <p class="precio-card__nombre">Combo valenciano de la casa</p>
+                <p class="precio-card__desc">Caja de arroz mediana con camarones + medio pollo Broaster o costilla ahumada + papá francesa + gaseosa 1.5 L Postobón.</p>
+              </div>
+              <div class="precio-card__acciones"><span class="precio-card__precio">$58.500</span><button class="btn-xs btn-agregar" data-cat="Arroz Chino" data-nombre="Combo valenciano de la casa">Agregar</button></div>
+            </div>
+          </div>
+          <div><span class="adicion-chip">➕ Adición de camarones — $10.000</span></div>
+        </div>
+
+        <!-- ARROZ PAISA -->
+        <div class="reveal reveal--2">
+          <div class="arroz-bloque__img-wrap">
+            <img src="imagenes/arroz_paisa.jpg" alt="Arroz Paisa El Imperio" class="arroz-bloque__img" />
+          </div>
+          <p class="arroz-bloque__subtitulo">Arroz Paisa</p>
+          <p class="arroz-bloque__nota">Todo arroz contiene: carne de cerdo, chicharrón, chorizo, salchicha, plátano maduro y maíz tierno.</p>
+          <div class="lista-precios">
+            <div class="precio-card precio-card--conimg">
+              <img src="imagenes/paisa_personal.jpg" alt="Arroz Paisa Personal" class="precio-card__img" />
+              <div class="precio-card__info">
+                <p class="precio-card__nombre">Personal</p>
+                <p class="precio-card__desc">Arroz, ¼ pollo Broaster o costilla de cerdo ahumada + papá francesa.</p>
+              </div>
+              <div class="precio-card__acciones"><span class="precio-card__precio">$25.500</span><button class="btn-xs btn-agregar" data-cat="Arroz Paisa" data-nombre="Personal">Agregar</button></div>
+            </div>
+            <div class="precio-card precio-card--conimg">
+              <img src="imagenes/paisa_especial.jpg" alt="Arroz Paisa Especial" class="precio-card__img" />
+              <div class="precio-card__info">
+                <p class="precio-card__nombre">Especial</p>
+                <p class="precio-card__desc">Arroz, ¼ pollo Broaster o costilla ahumada o churrasco + papá francesa. <em>(Recomendado para 2)</em></p>
+              </div>
+              <div class="precio-card__acciones"><span class="precio-card__precio">$34.000</span><button class="btn-xs btn-agregar" data-cat="Arroz Paisa" data-nombre="Especial">Agregar</button></div>
+            </div>
+            <div class="precio-card precio-card--conimg">
+              <img src="imagenes/paisa_valenciano.jpg" alt="Arroz Paisa Valenciano" class="precio-card__img" />
+              <div class="precio-card__info">
+                <p class="precio-card__nombre">Valenciano</p>
+                <p class="precio-card__desc">Caja de arroz mediana + ½ pollo Broaster o costilla ahumada + papá francesa + gaseosa 1.5 L Postobón. <em>(3–4 personas)</em></p>
+              </div>
+              <div class="precio-card__acciones"><span class="precio-card__precio">$51.000</span><button class="btn-xs btn-agregar" data-cat="Arroz Paisa" data-nombre="Valenciano">Agregar</button></div>
+            </div>
+            <div class="precio-card precio-card--conimg">
+              <img src="imagenes/paisa_mini_familiar.jpg" alt="Arroz Paisa Mini familiar" class="precio-card__img" />
+              <div class="precio-card__info">
+                <p class="precio-card__nombre">Mini familiar</p>
+                <p class="precio-card__desc">Caja de arroz grande + ½ pollo Broaster o costilla ahumada + gaseosa 1.5 L Postobón. <em>(4–5 personas)</em></p>
+              </div>
+              <div class="precio-card__acciones"><span class="precio-card__precio">$57.000</span><button class="btn-xs btn-agregar" data-cat="Arroz Paisa" data-nombre="Mini familiar">Agregar</button></div>
+            </div>
+            <div class="precio-card precio-card--conimg">
+              <img src="imagenes/paisa_familiar_completo.jpg" alt="Arroz Paisa Familiar completo" class="precio-card__img" />
+              <div class="precio-card__info">
+                <p class="precio-card__nombre">Familiar completo</p>
+                <p class="precio-card__desc">Caja de arroz grande + 1 pollo Broaster entero o 2 porciones de costilla ahumada + papá francesa + gaseosa 1.5 L Postobón. <em>(6–8 personas)</em></p>
+              </div>
+              <div class="precio-card__acciones"><span class="precio-card__precio">$71.000</span><button class="btn-xs btn-agregar" data-cat="Arroz Paisa" data-nombre="Familiar completo">Agregar</button></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══════════════ POLLO BROASTER ═══════════════ -->
+    <section class="menu-seccion" id="pollo">
+      <div class="seccion-titulo"><h2>Pollo Broaster</h2><hr /></div>
+      <img src="imagenes/pollo_broaster.jpg" alt="Pollo Broaster El Imperio" class="cat-img reveal" />
+      <div class="simple-grid">
+        <div class="precio-card precio-card--conimg reveal reveal--1">
+          <img src="imagenes/pollo_medio_sencillo.jpg" alt="Pollo Broaster medio sencillo" class="precio-card__img" />
+          <div class="precio-card__info">
+            <p class="precio-card__nombre">Medio sencillo</p>
+            <p class="precio-card__desc">½ pollo Broaster + papa francesa o patacón y arepa.</p>
+          </div>
+          <div class="precio-card__acciones"><span class="precio-card__precio">$19.500</span><button class="btn-xs btn-agregar" data-cat="Pollo Broaster" data-nombre="Medio sencillo">Agregar</button></div>
+        </div>
+        <div class="precio-card precio-card--conimg reveal reveal--2">
+          <img src="imagenes/pollo_medio_combo.jpg" alt="Pollo Broaster medio en combo" class="precio-card__img" />
+          <div class="precio-card__info">
+            <p class="precio-card__nombre">Medio en combo</p>
+            <p class="precio-card__desc">½ pollo Broaster + papa francesa, patacón, arepa + gaseosa Postobón 1.5 L.</p>
+          </div>
+          <div class="precio-card__acciones"><span class="precio-card__precio">$28.000</span><button class="btn-xs btn-agregar" data-cat="Pollo Broaster" data-nombre="Medio en combo">Agregar</button></div>
+        </div>
+        <div class="precio-card precio-card--conimg reveal reveal--3">
+          <img src="imagenes/pollo_completo_sencillo.jpg" alt="Pollo Broaster completo sencillo" class="precio-card__img" />
+          <div class="precio-card__info">
+            <p class="precio-card__nombre">Completo sencillo</p>
+            <p class="precio-card__desc">Pollo Broaster entero + papa francesa o patacón y arepa.</p>
+          </div>
+          <div class="precio-card__acciones"><span class="precio-card__precio">$35.000</span><button class="btn-xs btn-agregar" data-cat="Pollo Broaster" data-nombre="Completo sencillo">Agregar</button></div>
+        </div>
+        <div class="precio-card precio-card--conimg reveal reveal--4">
+          <img src="imagenes/pollo_completo_combo.jpg" alt="Pollo Broaster completo en combo" class="precio-card__img" />
+          <div class="precio-card__info">
+            <p class="precio-card__nombre">Completo en combo</p>
+            <p class="precio-card__desc">Pollo Broaster entero + papa francesa, patacón, arepa + gaseosa Postobón 1.5 L.</p>
+          </div>
+          <div class="precio-card__acciones"><span class="precio-card__precio">$45.500</span><button class="btn-xs btn-agregar" data-cat="Pollo Broaster" data-nombre="Completo en combo">Agregar</button></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ HAMBURGUESAS ═══════════════ -->
+    <section class="menu-seccion" id="hamburguesas">
+      <div class="seccion-titulo"><h2>Hamburguesas del Imperio</h2><hr /></div>
+      <img src="imagenes/hamburguesas.jpg" alt="Hamburguesas del Imperio" class="cat-img reveal" />
+      <div class="simple-grid">
+        <div class="precio-card precio-card--conimg reveal reveal--1">
+          <img src="imagenes/hamburguesa_combo.jpg" alt="Hamburguesa Combo" class="precio-card__img" />
+          <div class="precio-card__info">
+            <p class="precio-card__nombre">Combo</p>
+            <p class="precio-card__desc">Carne de res, queso, papa chip y vegetales + papá francesa y gaseosa.</p>
+          </div>
+          <div class="precio-card__acciones"><span class="precio-card__precio">$17.000</span><button class="btn-xs btn-agregar" data-cat="Hamburguesas" data-nombre="Combo">Agregar</button></div>
+        </div>
+        <div class="precio-card precio-card--conimg reveal reveal--2">
+          <img src="imagenes/hamburguesa_doble.jpg" alt="Hamburguesa Doble carne" class="precio-card__img" />
+          <div class="precio-card__info">
+            <p class="precio-card__nombre">Doble carne</p>
+            <p class="precio-card__desc">Carne de res, doble queso, papa chip y vegetales.</p>
+          </div>
+          <div class="precio-card__acciones"><span class="precio-card__precio">$15.000</span><button class="btn-xs btn-agregar" data-cat="Hamburguesas" data-nombre="Doble carne">Agregar</button></div>
+        </div>
+        <div class="precio-card precio-card--conimg reveal reveal--3">
+          <img src="imagenes/hamburguesa_picante.jpg" alt="Hamburguesa Picante" class="precio-card__img" />
+          <div class="precio-card__info">
+            <p class="precio-card__nombre">Picante</p>
+            <p class="precio-card__desc">Carne de res, jalapeños, queso, papa chip y vegetales.</p>
+          </div>
+          <div class="precio-card__acciones"><span class="precio-card__precio">$13.000</span><button class="btn-xs btn-agregar" data-cat="Hamburguesas" data-nombre="Picante">Agregar</button></div>
+        </div>
+        <div class="precio-card precio-card--conimg reveal reveal--4">
+          <img src="imagenes/hamburguesa_ranchera.jpg" alt="Hamburguesa Ranchera" class="precio-card__img" />
+          <div class="precio-card__info">
+            <p class="precio-card__nombre">Ranchera</p>
+            <p class="precio-card__desc">Carne de res, champiñón, maíz tierno, doble queso, papa chip y vegetales.</p>
+          </div>
+          <div class="precio-card__acciones"><span class="precio-card__precio">$15.000</span><button class="btn-xs btn-agregar" data-cat="Hamburguesas" data-nombre="Ranchera">Agregar</button></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ PLATOS A LA CARTA ═══════════════ -->
+    <section class="menu-seccion" id="carta">
+      <div class="seccion-titulo"><h2>Platos a la Carta</h2><hr /></div>
+      <img src="imagenes/platos_carta.jpg" alt="Platos a la Carta" class="cat-img reveal" />
+      <div class="simple-grid">
+        <div class="precio-card precio-card--conimg reveal reveal--1">
+          <img src="imagenes/bandeja_pollo.jpg" alt="Bandeja con pollo" class="precio-card__img" />
+          <div class="precio-card__info">
+            <p class="precio-card__nombre">Bandeja con pollo</p>
+            <p class="precio-card__desc">Arroz, papa francesa, patacón, yuca y ensalada.</p>
+          </div>
+          <div class="precio-card__acciones"><span class="precio-card__precio">$22.500</span><button class="btn-xs btn-agregar" data-cat="Platos a la Carta" data-nombre="Bandeja con pollo">Agregar</button></div>
+        </div>
+        <div class="precio-card precio-card--conimg reveal reveal--2">
+          <img src="imagenes/churrasco.jpg" alt="Churrasco" class="precio-card__img" />
+          <div class="precio-card__info">
+            <p class="precio-card__nombre">Churrasco</p>
+            <p class="precio-card__desc">Papa francesa, patacón, yuca y ensalada.</p>
+          </div>
+          <div class="precio-card__acciones"><span class="precio-card__precio">$27.500</span><button class="btn-xs btn-agregar" data-cat="Platos a la Carta" data-nombre="Churrasco">Agregar</button></div>
+        </div>
+        <div class="precio-card precio-card--conimg reveal reveal--3">
+          <img src="imagenes/mojarra.jpg" alt="Mojarra" class="precio-card__img" />
+          <div class="precio-card__info">
+            <p class="precio-card__nombre">Mojarra</p>
+            <p class="precio-card__desc">Arroz, papa francesa, patacón, yuca y ensalada.</p>
+          </div>
+          <div class="precio-card__acciones"><span class="precio-card__precio">$27.500</span><button class="btn-xs btn-agregar" data-cat="Platos a la Carta" data-nombre="Mojarra">Agregar</button></div>
+        </div>
+        <div class="precio-card precio-card--conimg reveal reveal--4">
+          <img src="imagenes/costillas.jpg" alt="Costillas" class="precio-card__img" />
+          <div class="precio-card__info">
+            <p class="precio-card__nombre">Costillas</p>
+            <p class="precio-card__desc">Arroz, papa francesa, patacón, yuca y ensalada.</p>
+          </div>
+          <div class="precio-card__acciones"><span class="precio-card__precio">$27.500</span><button class="btn-xs btn-agregar" data-cat="Platos a la Carta" data-nombre="Costillas">Agregar</button></div>
+        </div>
+        <div class="precio-card precio-card--conimg reveal reveal--5">
+          <img src="imagenes/pechuga_plancha.jpg" alt="Pechuga a la plancha" class="precio-card__img" />
+          <div class="precio-card__info">
+            <p class="precio-card__nombre">Pechuga a la plancha</p>
+            <p class="precio-card__desc">Arroz, papa francesa, patacón, yuca y ensalada.</p>
+          </div>
+          <div class="precio-card__acciones"><span class="precio-card__precio">$27.500</span><button class="btn-xs btn-agregar" data-cat="Platos a la Carta" data-nombre="Pechuga a la plancha">Agregar</button></div>
+        </div>
+        <div class="precio-card precio-card--conimg reveal reveal--6">
+          <img src="imagenes/pechuga_gratinada.jpg" alt="Pechuga gratinada" class="precio-card__img" />
+          <div class="precio-card__info">
+            <p class="precio-card__nombre">Pechuga gratinada</p>
+            <p class="precio-card__desc">Arroz, papa francesa, patacón, yuca y ensalada.</p>
+          </div>
+          <div class="precio-card__acciones"><span class="precio-card__precio">$30.000</span><button class="btn-xs btn-agregar" data-cat="Platos a la Carta" data-nombre="Pechuga gratinada">Agregar</button></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ BEBIDAS ═══════════════ -->
+    <section class="menu-seccion" id="bebidas">
+      <div class="seccion-titulo"><h2>Bebidas</h2><hr /></div>
+      <img src="imagenes/bebidas.jpg" alt="Bebidas El Imperio" class="cat-img reveal" style="height:160px;" />
+      <div class="bebidas-grid">
+        <div class="precio-card precio-card--conimg reveal reveal--1" style="flex-wrap:wrap;">
+          <img src="imagenes/jugo_natural.jpg" alt="Jugo Natural" class="precio-card__img" />
+          <div class="precio-card__info">
+            <p class="precio-card__nombre">Jugo Natural</p>
+            <p class="precio-card__desc">En agua o en leche. Sabores del día.</p>
+          </div>
+          <div class="precio-card__acciones"><span class="precio-card__precio">$5.000</span><button class="btn-xs btn-agregar" data-cat="Bebidas" data-nombre="Jugo Natural">Agregar</button></div>
+        </div>
+        <div class="precio-card precio-card--conimg reveal reveal--2" style="flex-wrap:wrap;">
+          <img src="imagenes/gaseosa_personal.jpg" alt="Gaseosa personal" class="precio-card__img" />
+          <div class="precio-card__info">
+            <p class="precio-card__nombre">Gaseosa personal</p>
+            <p class="precio-card__desc">Postobón 400 ml. Variedad de sabores.</p>
+          </div>
+          <div class="precio-card__acciones"><span class="precio-card__precio">$3.500</span><button class="btn-xs btn-agregar" data-cat="Bebidas" data-nombre="Gaseosa personal">Agregar</button></div>
+        </div>
+        <div class="precio-card precio-card--conimg reveal reveal--3" style="flex-wrap:wrap;">
+          <img src="imagenes/agua_botella.jpg" alt="Agua en botella" class="precio-card__img" />
+          <div class="precio-card__info">
+            <p class="precio-card__nombre">Agua en botella</p>
+            <p class="precio-card__desc">600 ml, sin gas.</p>
+          </div>
+          <div class="precio-card__acciones"><span class="precio-card__precio">$3.000</span><button class="btn-xs btn-agregar" data-cat="Bebidas" data-nombre="Agua en botella">Agregar</button></div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="contenedor">
+    <div class="footer__grid" style="grid-template-columns:1fr;">
+      <div class="footer__marca">
+        <img src="imagenes/logo.png" alt="Logo El Imperio del Arroz S&amp;S" />
+        <p class="footer__titulo">El Imperio del Arroz S&amp;S</p>
+        <p class="footer__texto">Arroces caseros con sabor de casa, en el corazón de Bosa.</p>
+        <div class="footer__iconos">
+          <a href="#" aria-label="Instagram"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          <a href="#" aria-label="Facebook"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer__copy">© 2024 El Imperio del Arroz S&amp;S. Todos los derechos reservados.</div>
+  </div>
+</footer>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox__cerrar" id="lightbox-cerrar" aria-label="Cerrar imagen">✕</button>
+  <img src="" alt="" class="lightbox__img" id="lightbox-img" />
+</div>
+
+<script>
+  const btnNav = document.getElementById('btn-menu-nav');
+  const navMovil = document.getElementById('nav-movil');
+  const iconoMenu = document.getElementById('icono-menu');
+  const iconoX = document.getElementById('icono-x');
+  btnNav.addEventListener('click', () => {
+    navMovil.classList.toggle('abierto');
+    iconoMenu.style.display = navMovil.classList.contains('abierto') ? 'none' : 'block';
+    iconoX.style.display = navMovil.classList.contains('abierto') ? 'block' : 'none';
+  });
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabBtns.forEach(b => b.classList.remove('activo'));
+      btn.classList.add('activo');
+      const target = document.getElementById(btn.dataset.target);
+      if (target) { const y = target.getBoundingClientRect().top + window.scrollY - 130; window.scrollTo({ top: y, behavior: 'smooth' }); }
+    });
+  });
+  const secciones = ['arroces','pollo','hamburguesas','carta','bebidas'];
+  window.addEventListener('scroll', () => {
+    let actual = secciones[0];
+    secciones.forEach(id => { const el = document.getElementById(id); if (el && el.getBoundingClientRect().top < 160) actual = id; });
+    tabBtns.forEach(b => b.classList.toggle('activo', b.dataset.target === actual));
+  }, { passive: true });
+
+  // =================== LIGHTBOX DE IMÁGENES ===================
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const lightboxCierre = document.getElementById('lightbox-cerrar');
+
+  function abrirLightbox(src, alt) {
+    lightboxImg.src = src;
+    lightboxImg.alt = alt || '';
+    lightbox.classList.add('lightbox--abierto');
+    document.body.style.overflow = 'hidden';
+  }
+  function cerrarLightbox() {
+    lightbox.classList.remove('lightbox--abierto');
+    document.body.style.overflow = '';
+    lightboxImg.src = '';
+  }
+
+  document.querySelectorAll('.precio-card__img, .arroz-bloque__img, .cat-img').forEach(img => {
+    img.classList.add('img-ampliable');
+    img.setAttribute('tabindex', '0');
+    img.setAttribute('role', 'button');
+    img.setAttribute('aria-label', 'Ver imagen completa de ' + (img.alt || 'plato'));
+    img.addEventListener('click', () => abrirLightbox(img.src, img.alt));
+    img.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); abrirLightbox(img.src, img.alt); } });
+  });
+
+  lightboxCierre.addEventListener('click', cerrarLightbox);
+  lightbox.addEventListener('click', (e) => { if (e.target === lightbox) cerrarLightbox(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') cerrarLightbox(); });
+</script>
+<script src="script.js"></script>
+</body>
+</html>

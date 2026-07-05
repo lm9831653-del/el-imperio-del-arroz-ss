@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>El Imperio del Arroz S&S — Inicio</title>
+  <meta name="description" content="Arroces caseros con sabor de casa en el corazón de Bosa. Cra. 88d #74A-47, Bogotá." />
+  <link rel="icon" type="image/png" href="imagenes/favicon.png" />
+  <link rel="stylesheet" href="estilos.css" />
+  <style>
+    .hero{position:relative;width:100%;height:85vh;min-height:520px;display:flex;align-items:flex-end;overflow:hidden;}
+    .hero__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;}
+    .hero__overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.82) 0%,rgba(0,0,0,0.38) 55%,rgba(0,0,0,0.10) 100%);}
+    .hero__contenido{position:relative;z-index:2;width:100%;padding:2.5rem 1.25rem 3.5rem;text-align:center;}
+    .hero__titulo{font-family:var(--fuente-display);font-weight:800;font-size:clamp(2.4rem,8vw,5.5rem);color:#fff;line-height:1.1;text-shadow:0 2px 16px rgba(0,0,0,0.5);margin-bottom:0.85rem;}
+    .hero__titulo span{color:var(--secundario);}
+    .hero__subtitulo{font-size:clamp(1rem,2.5vw,1.35rem);color:rgba(255,255,255,0.9);margin-bottom:2rem;max-width:560px;margin-left:auto;margin-right:auto;text-shadow:0 1px 6px rgba(0,0,0,0.4);}
+    .hero__botones{display:flex;flex-direction:column;gap:0.85rem;align-items:center;}
+    @media(min-width:500px){.hero__botones{flex-direction:row;justify-content:center;}}
+    .hero__botones .btn{min-width:200px;}
+    .btn-hero-outline{background:rgba(255,255,255,0.12);border:2px solid rgba(255,255,255,0.35);backdrop-filter:blur(6px);color:#fff;padding:0.85rem 2rem;border-radius:999px;display:inline-flex;align-items:center;gap:0.5rem;font-weight:600;font-size:1rem;transition:background .2s,transform .15s;min-width:200px;justify-content:center;}
+    .btn-hero-outline:hover{background:rgba(255,255,255,0.22);transform:translateY(-1px);}
+    .especialidades{padding:5rem 1rem;background:var(--fondo);position:relative;overflow:hidden;}
+    .especialidades::before{content:'';position:absolute;width:260px;height:260px;border-radius:50%;filter:blur(70px);background:rgba(122,21,48,0.08);top:-40px;right:5%;pointer-events:none;}
+    .especialidades::after{content:'';position:absolute;width:220px;height:220px;border-radius:50%;filter:blur(70px);background:rgba(224,140,26,0.10);bottom:-30px;left:5%;pointer-events:none;}
+    .hero__titulo{animation:apareceArriba .9s ease both;}
+    .hero__subtitulo{animation:apareceArriba .9s ease .15s both;}
+    .hero__botones{animation:apareceArriba .9s ease .3s both;}
+    .franja-info{position:relative;overflow:hidden;}
+    .franja-info::before{content:'';position:absolute;width:240px;height:240px;border-radius:50%;filter:blur(70px);background:rgba(122,21,48,0.10);top:-60px;right:10%;pointer-events:none;}
+    .especialidades__encabezado{display:flex;flex-direction:column;gap:0.5rem;margin-bottom:3rem;}
+    @media(min-width:768px){.especialidades__encabezado{flex-direction:row;justify-content:space-between;align-items:flex-end;}}
+    .especialidades__encabezado h2{font-family:var(--fuente-display);font-weight:800;font-size:clamp(1.75rem,4vw,2.5rem);color:var(--primario);}
+    .especialidades__encabezado p{color:var(--texto-suave);font-size:1rem;}
+    .platos-grid{display:grid;grid-template-columns:1fr;gap:1.5rem;}
+    @media(min-width:640px){.platos-grid{grid-template-columns:repeat(2,1fr);}}
+    @media(min-width:1024px){.platos-grid{grid-template-columns:repeat(4,1fr);}}
+    .plato-card{background:var(--blanco);border:1px solid var(--borde);border-radius:var(--radio-lg);overflow:hidden;box-shadow:var(--sombra-sm);transition:transform .2s,box-shadow .2s;}
+    .plato-card:hover{transform:translateY(-4px);box-shadow:var(--sombra-md);}
+    .plato-card__img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;transition:transform .4s;}
+    .plato-card:hover .plato-card__img{transform:scale(1.04);}
+    .plato-card__img-wrap{overflow:hidden;}
+    .plato-card__body{padding:1.25rem;}
+    .plato-card__nombre{font-family:var(--fuente-display);font-weight:700;font-size:1.1rem;margin-bottom:0.25rem;}
+    .plato-card__desc{font-size:0.85rem;color:var(--texto-suave);margin-bottom:1rem;}
+    .plato-card__footer{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--borde);padding-top:0.85rem;}
+    .plato-card__precio{font-weight:600;color:var(--primario);font-size:0.9rem;}
+    .btn-sm{padding:0.45rem 1rem;font-size:0.85rem;}
+    .franja-info{background:var(--fondo-tarjeta);border-top:1px solid var(--borde);border-bottom:1px solid var(--borde);padding:2rem 1rem;}
+    .franja-info__inner{display:flex;flex-direction:column;gap:1.5rem;align-items:center;text-align:center;}
+    @media(min-width:768px){.franja-info__inner{flex-direction:row;justify-content:space-between;text-align:left;}}
+    .franja-item{display:flex;align-items:flex-start;gap:0.85rem;}
+    .franja-item__icono{background:var(--primario-10);border-radius:50%;padding:0.65rem;color:var(--primario);flex-shrink:0;}
+    .franja-item__icono svg{width:22px;height:22px;}
+    .franja-item strong{display:block;font-weight:700;font-size:0.95rem;}
+    .franja-item span{font-size:0.82rem;color:var(--texto-suave);}
+    /* === FORMULARIO RESEÑA === */
+    .seccion-resena-form{background:var(--fondo-tarjeta);padding:5rem 1rem;border-top:1px solid var(--borde);}
+    .resena-form-wrap{max-width:640px;margin:0 auto;text-align:center;}
+    .resena-form-wrap h2{font-family:var(--fuente-display);font-weight:800;font-size:clamp(1.6rem,4vw,2.25rem);color:var(--primario);margin-bottom:0.5rem;}
+    .resena-form-wrap>p{color:var(--texto-suave);margin-bottom:2rem;}
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="contenedor nav__inner">
+    <a href="index.html" class="nav__logo"><img src="imagenes/logo.png" alt="Logo El Imperio del Arroz S&amp;S" /><span>El Imperio del Arroz S&amp;S</span></a>
+    <div class="nav__links">
+      <a href="index.html"     class="nav__link nav__link--activo">Inicio</a>
+      <a href="menu.html"      class="nav__link">Menú</a>
+      <a href="ubicacion.html" class="nav__link">Ubicación</a>
+      <a href="nosotros.html"  class="nav__link">Nosotros</a>
+      <a href="domicilio.html" class="nav__link">Domicilio<span class="carrito-badge">0</span></a>
+    </div>
+    <button class="nav__hamburgesa" id="btn-menu" aria-label="Abrir menú">
+      <svg id="icono-menu" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      <svg id="icono-x" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="display:none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="nav__movil contenedor" id="nav-movil">
+    <a href="index.html"     class="nav__movil-link nav__movil-link--activo">Inicio</a>
+    <a href="menu.html"      class="nav__movil-link">Menú</a>
+    <a href="ubicacion.html" class="nav__movil-link">Ubicación</a>
+    <a href="nosotros.html"  class="nav__movil-link">Nosotros</a>
+    <a href="domicilio.html" class="nav__movil-link">Domicilio<span class="carrito-badge">0</span></a>
+  </div>
+</nav>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero">
+    <img src="imagenes/hero.jpg" alt="Arroz Valenciano El Imperio del Arroz" class="hero__img" />
+    <div class="hero__overlay"></div>
+    <div class="hero__contenido">
+      <h1 class="hero__titulo">El Imperio del <span>Arroz S&amp;S</span></h1>
+      <p class="hero__subtitulo">Arroces caseros con sabor de casa, en el corazón de Bosa</p>
+    </div>
+  </section>
+
+  <!-- ESPECIALIDADES -->
+  <section class="especialidades">
+    <div class="contenedor">
+      <div class="especialidades__encabezado">
+        <div>
+          <h2>Nuestras Especialidades</h2>
+          <p>Los platos más pedidos del barrio, listos para disfrutar.</p>
+        </div>
+        <a href="menu.html" style="color:var(--primario);font-weight:600;font-size:0.9rem;display:inline-flex;align-items:center;gap:4px;white-space:nowrap;">
+          Ver menú completo
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+      </div>
+      <div class="platos-grid">
+        <div class="plato-card reveal reveal--1">
+          <div class="plato-card__img-wrap"><img src="imagenes/hero.jpg" alt="Arroz Valenciano" class="plato-card__img" /></div>
+          <div class="plato-card__body">
+            <p class="plato-card__nombre">Arroz Valenciano</p>
+            <p class="plato-card__desc">Nuestro plato estrella</p>
+            <div class="plato-card__footer">
+              <span class="plato-card__precio">Consúltanos</span>
+              <a href="menu.html" class="btn btn-primario btn-sm">Ver menú</a>
+            </div>
+          </div>
+        </div>
+        <div class="plato-card reveal reveal--2">
+          <div class="plato-card__img-wrap"><img src="imagenes/pollo_crocante.jpg" alt="Pollo Crocante" class="plato-card__img" /></div>
+          <div class="plato-card__body">
+            <p class="plato-card__nombre">Pollo Crocante</p>
+            <p class="plato-card__desc">Crocante y sin grasa</p>
+            <div class="plato-card__footer">
+              <span class="plato-card__precio">Consúltanos</span>
+              <a href="menu.html" class="btn btn-primario btn-sm">Ver menú</a>
+            </div>
+          </div>
+        </div>
+        <div class="plato-card reveal reveal--3">
+          <div class="plato-card__img-wrap"><img src="imagenes/arroz_camarones.jpg" alt="Arroz con Camarones" class="plato-card__img" /></div>
+          <div class="plato-card__body">
+            <p class="plato-card__nombre">Arroz con Camarones</p>
+            <p class="plato-card__desc">Mariscos frescos</p>
+            <div class="plato-card__footer">
+              <span class="plato-card__precio">Consúltanos</span>
+              <a href="menu.html" class="btn btn-primario btn-sm">Ver menú</a>
+            </div>
+          </div>
+        </div>
+        <div class="plato-card reveal reveal--4">
+          <div class="plato-card__img-wrap"><img src="imagenes/arroz_mixto.jpg" alt="Arroz Mixto" class="plato-card__img" /></div>
+          <div class="plato-card__body">
+            <p class="plato-card__nombre">Arroz Mixto</p>
+            <p class="plato-card__desc">La combinación perfecta</p>
+            <div class="plato-card__footer">
+              <span class="plato-card__precio">Consúltanos</span>
+              <a href="menu.html" class="btn btn-primario btn-sm">Ver menú</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESEÑAS -->
+  <section class="seccion-resenas">
+    <div class="contenedor">
+      <div class="resenas__encabezado reveal">
+        <div class="estrellas estrellas--grande" style="justify-content:center;margin-bottom:1rem;">
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <h2>El barrio nos respalda</h2>
+        <p>No lo decimos nosotros, lo dicen nuestros clientes con sus reseñas reales de 5 estrellas en Google.</p>
+      </div>
+      <div style="text-align:center;margin-top:0.5rem;">
+        <a href="nosotros.html#resenas" class="btn btn-outline">Ver todas las reseñas</a>
+      </div>
+      <div class="resenas__grid">
+        <div class="resena-tarjeta">
+          <div class="estrellas estrellas--pequenas"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+          <p>"Uno de los pocos lugares donde la comida es deliciosa y hay muy buen ambiente."</p>
+          <small>— Cliente verificado</small>
+        </div>
+        <div class="resena-tarjeta">
+          <div class="estrellas estrellas--pequenas"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+          <p>"Me encantó el arroz valenciano, excelente sazón, y el pollo estaba crocante y nada grasoso."</p>
+          <small>— Cliente verificado</small>
+        </div>
+        <div class="resena-tarjeta">
+          <div class="estrellas estrellas--pequenas"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+          <p>"Excelente servicio y comida deliciosa."</p>
+          <small>— Cliente verificado</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEJA TU RESEÑA -->
+  <section class="seccion-resena-form">
+    <div class="contenedor">
+      <div class="resena-form-wrap reveal">
+        <h2>¿Ya nos visitaste?</h2>
+        <p>Tu opinión nos ayuda a seguir mejorando y a que más personas nos conozcan. Cuéntanos tu experiencia en Google, es rápido y le sirve a todo el barrio.</p>
+        <a href="https://maps.app.goo.gl/8yaYphxwYAM2rJmp7" target="_blank" class="btn btn-primario" style="display:inline-flex;align-items:center;gap:0.6rem;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          Dejar mi reseña en Google
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FRANJA INFO -->
+  <section class="franja-info">
+    <div class="contenedor">
+      <div class="franja-info__inner">
+        <div class="franja-item">
+          <div class="franja-item__icono"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+          <div><strong>Horario de atención</strong><span>Lun–Sáb 11am–10:30pm | Dom 12pm–10:30pm</span></div>
+        </div>
+        <div class="franja-item">
+          <div class="franja-item__icono"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <div><strong>Sur Villa Ema, Bosa</strong><span>Bogotá, Cundinamarca</span></div>
+        </div>
+        <a href="ubicacion.html" class="btn btn-outline">Cómo llegar</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="contenedor">
+    <div class="footer__grid" style="grid-template-columns:1fr;">
+      <div class="footer__marca">
+        <img src="imagenes/logo.png" alt="Logo El Imperio del Arroz S&amp;S" />
+        <p class="footer__titulo">El Imperio del Arroz S&amp;S</p>
+        <p class="footer__texto">Arroces caseros con sabor de casa, en el corazón de Bosa. Platos abundantes, ingredientes frescos y nuestra sazón única.</p>
+        <div class="footer__iconos">
+          <a href="#" aria-label="Instagram"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          <a href="#" aria-label="Facebook"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer__copy">© 2024 El Imperio del Arroz S&amp;S. Todos los derechos reservados.</div>
+  </div>
+</footer>
+
+<script>
+  const btn = document.getElementById('btn-menu');
+  const navMovil = document.getElementById('nav-movil');
+  const iconoMenu = document.getElementById('icono-menu');
+  const iconoX = document.getElementById('icono-x');
+  btn.addEventListener('click', () => {
+    navMovil.classList.toggle('abierto');
+    iconoMenu.style.display = navMovil.classList.contains('abierto') ? 'none' : 'block';
+    iconoX.style.display = navMovil.classList.contains('abierto') ? 'block' : 'none';
+  });
+</script>
+<script src="script.js"></script>
+</body>
+</html>

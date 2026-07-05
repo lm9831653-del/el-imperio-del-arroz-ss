@@ -1,0 +1,3 @@
+imagenes/* binary
+imagenes/**/*.jpg binary
+imagenes/**/*.png binary

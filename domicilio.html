@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Domicilio — El Imperio del Arroz S&S</title>
+  <meta name="description" content="Haz tu pedido a domicilio en El Imperio del Arroz S&S. Selecciona tus platos, déjanos tu dirección y te lo llevamos." />
+  <link rel="icon" type="image/png" href="imagenes/favicon.png" />
+  <link rel="stylesheet" href="estilos.css" />
+  <style>
+    .dom-layout{display:grid;grid-template-columns:1fr;gap:2.5rem;padding-bottom:4rem;}
+    @media(min-width:1024px){.dom-layout{grid-template-columns:1fr 400px;align-items:start;}}
+
+    /* CATEGORÍAS MENÚ */
+    .cat-titulo{font-family:var(--fuente-display);font-weight:800;font-size:1.3rem;color:var(--primario);margin:2rem 0 0.85rem;display:flex;align-items:center;gap:0.75rem;}
+    .cat-titulo::after{content:'';flex:1;border-top:1px solid var(--borde);}
+    .items-lista{display:flex;flex-direction:column;gap:0.6rem;}
+    .item-fila{display:flex;align-items:center;justify-content:space-between;gap:1rem;background:var(--blanco);border:1px solid var(--borde);border-radius:var(--radio);padding:0.85rem 1rem;transition:border-color .2s;}
+    .item-fila:hover{border-color:var(--primario);}
+    .item-fila__info{flex:1;}
+    .item-fila__nombre{font-weight:700;font-size:0.9rem;color:var(--texto);}
+    .item-fila__precio{font-size:0.8rem;color:var(--primario);font-weight:600;margin-top:0.1rem;}
+    .contador{display:flex;align-items:center;gap:0.5rem;flex-shrink:0;}
+    .contador__btn{width:30px;height:30px;border-radius:50%;border:none;cursor:pointer;font-size:1.1rem;font-weight:700;display:flex;align-items:center;justify-content:center;transition:background .15s,color .15s;}
+    .contador__btn--menos{background:var(--fondo-tarjeta);color:var(--texto-suave);}
+    .contador__btn--menos:hover{background:var(--borde);}
+    .contador__btn--mas{background:var(--primario);color:var(--blanco);}
+    .contador__btn--mas:hover{background:var(--primario-claro);}
+    .contador__valor{min-width:22px;text-align:center;font-weight:700;font-size:0.95rem;color:var(--texto);}
+
+    /* PANEL PEDIDO */
+    .panel-pedido{background:var(--blanco);border:1px solid var(--borde);border-radius:var(--radio-xl);padding:2rem;box-shadow:var(--sombra-md);position:sticky;top:80px;}
+    .panel-pedido h2{font-family:var(--fuente-display);font-weight:800;font-size:1.35rem;color:var(--primario);margin-bottom:1.25rem;display:flex;align-items:center;gap:0.5rem;}
+    .resumen-lista{display:flex;flex-direction:column;gap:0.5rem;min-height:80px;margin-bottom:1.25rem;}
+    .resumen-item{display:flex;align-items:center;justify-content:space-between;gap:0.5rem;font-size:0.875rem;}
+    .resumen-item__info{flex:1;color:var(--texto);}
+    .resumen-item__precio{font-weight:600;color:var(--primario);white-space:nowrap;}
+    .resumen-item__quitar{flex-shrink:0;width:24px;height:24px;border-radius:50%;border:none;background:var(--fondo-tarjeta);color:var(--texto-suave);cursor:pointer;font-size:0.95rem;line-height:1;display:flex;align-items:center;justify-content:center;transition:background .15s,color .15s;}
+    .resumen-item__quitar:hover{background:#fde2e2;color:#c0392b;}
+    .resumen-vacio{color:var(--texto-suave);font-size:0.875rem;font-style:italic;text-align:center;padding:1.5rem 0;}
+    .resumen-total{display:flex;justify-content:space-between;font-weight:800;font-size:1.05rem;border-top:1px solid var(--borde);padding-top:0.85rem;margin-bottom:1.5rem;}
+    .btn-volver-menu{width:100%;display:flex;align-items:center;justify-content:center;gap:0.5rem;background:var(--fondo-tarjeta);color:var(--texto);border:1px solid var(--borde);padding:0.8rem 1.5rem;border-radius:999px;font-weight:700;font-size:0.9rem;cursor:pointer;text-decoration:none;transition:background .2s,border-color .2s;font-family:var(--fuente-cuerpo);margin-bottom:0.85rem;box-sizing:border-box;}
+    .btn-volver-menu:hover{background:var(--blanco);border-color:var(--primario);color:var(--primario);}
+    .btn-volver-menu svg{width:18px;height:18px;}
+
+    /* FORMULARIO */
+    .form-grupo{margin-bottom:1rem;}
+    .form-grupo label{display:block;font-weight:700;font-size:0.85rem;margin-bottom:0.4rem;color:var(--texto);}
+    .form-grupo input,.form-grupo textarea{width:100%;padding:0.75rem 1rem;border:1px solid var(--borde);border-radius:var(--radio);font-family:var(--fuente-cuerpo);font-size:0.9rem;color:var(--texto);background:var(--fondo);outline:none;transition:border-color .2s;box-sizing:border-box;}
+    .form-grupo input:focus,.form-grupo textarea:focus{border-color:var(--primario);background:var(--blanco);}
+    .form-grupo textarea{min-height:80px;resize:vertical;}
+    .btn-enviar{width:100%;display:flex;align-items:center;justify-content:center;gap:0.65rem;background:#25D366;color:#fff;border:none;padding:1rem 1.5rem;border-radius:999px;font-weight:800;font-size:1rem;cursor:pointer;transition:background .2s,transform .15s;font-family:var(--fuente-cuerpo);margin-top:0.5rem;}
+    .btn-enviar:hover{background:#1ebe5d;transform:translateY(-1px);}
+    .btn-enviar svg{width:22px;height:22px;}
+    .btn-enviar:disabled{background:#aaa;cursor:not-allowed;transform:none;}
+    .aviso-seleccion{font-size:0.8rem;color:var(--texto-suave);text-align:center;margin-top:0.75rem;}
+
+    /* NOTA */
+    .nota-dom{background:var(--fondo-tarjeta);border:1px solid var(--borde);border-radius:var(--radio);padding:1rem;font-size:0.82rem;color:var(--texto-suave);line-height:1.6;margin-bottom:1.5rem;}
+    .nota-dom strong{color:var(--texto);}
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="contenedor nav__inner">
+    <a href="index.html" class="nav__logo"><img src="imagenes/logo.png" alt="Logo El Imperio del Arroz S&amp;S" /><span>El Imperio del Arroz S&amp;S</span></a>
+    <div class="nav__links">
+      <a href="index.html"     class="nav__link">Inicio</a>
+      <a href="menu.html"      class="nav__link">Menú</a>
+      <a href="ubicacion.html" class="nav__link">Ubicación</a>
+      <a href="nosotros.html"  class="nav__link">Nosotros</a>
+      <a href="domicilio.html" class="nav__link nav__link--activo">Domicilio<span class="carrito-badge">0</span></a>
+    </div>
+    <button class="nav__hamburgesa" id="btn-menu" aria-label="Abrir menú">
+      <svg id="icono-menu" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      <svg id="icono-x" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="display:none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="nav__movil contenedor" id="nav-movil">
+    <a href="index.html"     class="nav__movil-link">Inicio</a>
+    <a href="menu.html"      class="nav__movil-link">Menú</a>
+    <a href="ubicacion.html" class="nav__movil-link">Ubicación</a>
+    <a href="nosotros.html"  class="nav__movil-link">Nosotros</a>
+    <a href="domicilio.html" class="nav__movil-link nav__movil-link--activo">Domicilio<span class="carrito-badge">0</span></a>
+  </div>
+</nav>
+
+<main>
+  <div class="cabecera-pagina cabecera-pagina--foto cabecera-pagina--domicilio">
+    <h1>Pedir a Domicilio</h1>
+    <p>Elige tus platos, déjanos tu dirección y te lo llevamos.</p>
+    <p id="aviso-agregado" style="display:none;margin-top:1rem;font-weight:700;background:rgba(255,255,255,0.18);border-radius:999px;padding:0.5rem 1.2rem;display:inline-block;">✓ ¡Tu plato fue agregado al pedido!</p>
+  </div>
+
+  <div class="contenedor">
+    <div class="dom-layout">
+
+      <!-- MENÚ SELECTOR -->
+      <div>
+
+        <div class="items-lista" id="lista-items"></div>
+
+      </div>
+
+      <!-- PANEL PEDIDO -->
+      <div>
+        <div class="panel-pedido">
+          <h2>
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            Tu pedido
+          </h2>
+
+          <div class="resumen-lista" id="resumen-lista">
+            <p class="resumen-vacio" id="resumen-vacio">Aún no has seleccionado ningún plato.</p>
+          </div>
+
+          <div class="resumen-total">
+            <span>Total estimado</span>
+            <span id="total-precio">$0</span>
+          </div>
+
+          <a href="menu.html" class="btn-volver-menu">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+            Volver al menú para pedir algo más
+          </a>
+
+          <div class="nota-dom">
+            <strong>Nota:</strong> Los precios son estimados. El costo del domicilio se calcula según tu dirección y se confirma por WhatsApp.
+          </div>
+
+          <form id="form-domicilio">
+            <div class="form-grupo">
+              <label for="cli-nombre">Tu nombre *</label>
+              <input type="text" id="cli-nombre" placeholder="Ej: María García" required />
+            </div>
+            <div class="form-grupo">
+              <label for="cli-direccion">Dirección de entrega *</label>
+              <input type="text" id="cli-direccion" placeholder="Ej: Cra 88 #74A-20, Bosa" required />
+            </div>
+            <div class="form-grupo">
+              <label for="cli-telefono">Teléfono de contacto *</label>
+              <input type="tel" id="cli-telefono" placeholder="Ej: 300 123 4567" required />
+            </div>
+            <div class="form-grupo">
+              <label for="cli-notas">Notas adicionales</label>
+              <textarea id="cli-notas" placeholder="Ej: Sin cebolla, apartamento 302, etc."></textarea>
+            </div>
+            <button type="submit" class="btn-enviar" id="btn-enviar">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.531 5.845L.057 23.078a.75.75 0 0 0 .916.908l5.354-1.464A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.65-.513-5.166-1.41l-.37-.22-3.817 1.044 1.068-3.712-.24-.385A10 10 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+              Enviar pedido por WhatsApp
+            </button>
+            <p class="aviso-seleccion">Te redirigiremos a WhatsApp con tu pedido listo para enviar.</p>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="contenedor">
+    <div class="footer__grid" style="grid-template-columns:1fr;">
+      <div class="footer__marca">
+        <img src="imagenes/logo.png" alt="Logo El Imperio del Arroz S&amp;S" />
+        <p class="footer__titulo">El Imperio del Arroz S&amp;S</p>
+        <p class="footer__texto">Arroces caseros con sabor de casa, en el corazón de Bosa.</p>
+        <div class="footer__iconos">
+          <a href="#" aria-label="Instagram"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          <a href="#" aria-label="Facebook"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer__copy">© 2024 El Imperio del Arroz S&amp;S. Todos los derechos reservados.</div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+<script>
+// =================== MENÚ DATA ===================
+const MENU = [
+  { cat: 'Arroz Chino', items: [
+    { nombre: 'Personal',                    precio: 24500 },
+    { nombre: 'Especial',                    precio: 33000 },
+    { nombre: 'Valenciano',                  precio: 48500 },
+    { nombre: 'Mini familiar',               precio: 52500 },
+    { nombre: 'Familiar completo',           precio: 64000 },
+    { nombre: 'Combo valenciano de la casa', precio: 58500 },
+  ]},
+  { cat: 'Arroz Paisa', items: [
+    { nombre: 'Personal',          precio: 25500 },
+    { nombre: 'Especial',          precio: 34000 },
+    { nombre: 'Valenciano',        precio: 51000 },
+    { nombre: 'Mini familiar',     precio: 57000 },
+    { nombre: 'Familiar completo', precio: 71000 },
+  ]},
+  { cat: 'Pollo Broaster', items: [
+    { nombre: 'Medio sencillo',    precio: 19500 },
+    { nombre: 'Medio en combo',    precio: 28000 },
+    { nombre: 'Completo sencillo', precio: 35000 },
+    { nombre: 'Completo en combo', precio: 45500 },
+  ]},
+  { cat: 'Hamburguesas', items: [
+    { nombre: 'Combo',       precio: 17000 },
+    { nombre: 'Doble carne', precio: 15000 },
+    { nombre: 'Picante',     precio: 13000 },
+    { nombre: 'Ranchera',    precio: 15000 },
+  ]},
+  { cat: 'Platos a la Carta', items: [
+    { nombre: 'Bandeja con pollo',    precio: 22500 },
+    { nombre: 'Churrasco',            precio: 27500 },
+    { nombre: 'Mojarra',              precio: 27500 },
+    { nombre: 'Costillas',            precio: 27500 },
+    { nombre: 'Pechuga a la plancha', precio: 27500 },
+    { nombre: 'Pechuga gratinada',    precio: 30000 },
+  ]},
+  { cat: 'Bebidas', items: [
+    { nombre: 'Jugo Natural',      precio: 5000 },
+    { nombre: 'Gaseosa personal',  precio: 3500 },
+    { nombre: 'Agua en botella',   precio: 3000 },
+  ]},
+];
+
+// =================== STATE ===================
+const cantidades = {};
+const carritoGuardado = obtenerCarrito();
+
+function fmt(n) {
+  if (n === 0) return 'Consultar';
+  return '$' + n.toLocaleString('es-CO');
+}
+
+// =================== RENDER MENÚ ===================
+const listaEl = document.getElementById('lista-items');
+listaEl.innerHTML = '';
+
+MENU.forEach(cat => {
+  // Título de categoría
+  const tit = document.createElement('p');
+  tit.className = 'cat-titulo';
+  tit.textContent = cat.cat;
+  listaEl.appendChild(tit);
+
+  // Items
+  const lista = document.createElement('div');
+  lista.className = 'items-lista';
+
+  cat.items.forEach(item => {
+    const key = cat.cat + '|' + item.nombre;
+    cantidades[key] = carritoGuardado[key] || 0;
+
+    const fila = document.createElement('div');
+    fila.className = 'item-fila reveal';
+    fila.innerHTML = `
+      <div class="item-fila__info">
+        <div class="item-fila__nombre">${item.nombre}</div>
+        <div class="item-fila__precio">${fmt(item.precio)}</div>
+      </div>
+      <div class="contador">
+        <button class="contador__btn contador__btn--menos" data-key="${key}" aria-label="Restar">−</button>
+        <span class="contador__valor" id="val-${key.replace(/[|& ]/g,'-')}">${cantidades[key]}</span>
+        <button class="contador__btn contador__btn--mas" data-key="${key}" aria-label="Agregar">+</button>
+      </div>`;
+    lista.appendChild(fila);
+  });
+
+  listaEl.appendChild(lista);
+});
+
+// Re-observar los nuevos elementos .reveal generados dinámicamente
+if ('IntersectionObserver' in window) {
+  const obsDinamico = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) { entry.target.classList.add('reveal--visible'); obsDinamico.unobserve(entry.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.item-fila.reveal').forEach(el => obsDinamico.observe(el));
+} else {
+  document.querySelectorAll('.item-fila.reveal').forEach(el => el.classList.add('reveal--visible'));
+}
+
+actualizarResumen();
+
+// =================== EVENTOS CONTADOR ===================
+document.addEventListener('click', function(e) {
+  const btn = e.target.closest('.contador__btn');
+  if (!btn) return;
+  const key = btn.dataset.key;
+  if (!key) return;
+
+  if (btn.classList.contains('contador__btn--mas')) {
+    cantidades[key]++;
+  } else {
+    if (cantidades[key] > 0) cantidades[key]--;
+  }
+
+  const safeId = 'val-' + key.replace(/[|& ]/g, '-');
+  const valEl = document.getElementById(safeId);
+  if (valEl) valEl.textContent = cantidades[key];
+
+  guardarCarrito(cantidades);
+  actualizarBadgeCarrito();
+  actualizarResumen();
+});
+
+// =================== ACTUALIZAR RESUMEN ===================
+function actualizarResumen() {
+  const listaRes = document.getElementById('resumen-lista');
+  const vacioPar = document.getElementById('resumen-vacio');
+  const totalEl  = document.getElementById('total-precio');
+
+  let totalNum = 0;
+  let items = [];
+
+  MENU.forEach(cat => {
+    cat.items.forEach(item => {
+      const key = cat.cat + '|' + item.nombre;
+      const qty = cantidades[key] || 0;
+      if (qty > 0) {
+        items.push({ key, nombre: `${item.nombre} (${cat.cat})`, qty, precio: item.precio });
+        totalNum += item.precio * qty;
+      }
+    });
+  });
+
+  listaRes.innerHTML = '';
+  if (items.length === 0) {
+    const p = document.createElement('p');
+    p.className = 'resumen-vacio';
+    p.id = 'resumen-vacio';
+    p.textContent = 'Aún no has seleccionado ningún plato.';
+    listaRes.appendChild(p);
+    totalEl.textContent = '$0';
+  } else {
+    items.forEach(it => {
+      const row = document.createElement('div');
+      row.className = 'resumen-item';
+      row.innerHTML = `
+        <span class="resumen-item__info">${it.qty}× ${it.nombre}</span>
+        <span class="resumen-item__precio">${it.precio > 0 ? fmt(it.precio * it.qty) : 'Consultar'}</span>
+        <button type="button" class="resumen-item__quitar" data-key="${it.key}" aria-label="Quitar ${it.nombre} del pedido" title="Quitar del pedido">✕</button>`;
+      listaRes.appendChild(row);
+    });
+    totalEl.textContent = totalNum > 0 ? fmt(totalNum) : 'Consultar';
+  }
+}
+
+// =================== QUITAR ITEM DESDE EL RESUMEN ===================
+document.addEventListener('click', function(e) {
+  const quitarBtn = e.target.closest('.resumen-item__quitar');
+  if (!quitarBtn) return;
+  const key = quitarBtn.dataset.key;
+  if (!key) return;
+
+  cantidades[key] = 0;
+
+  const safeId = 'val-' + key.replace(/[|& ]/g, '-');
+  const valEl = document.getElementById(safeId);
+  if (valEl) valEl.textContent = 0;
+
+  guardarCarrito(cantidades);
+  actualizarBadgeCarrito();
+  actualizarResumen();
+});
+
+// =================== ENVIAR POR WA ===================
+document.getElementById('form-domicilio').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  const nombre    = document.getElementById('cli-nombre').value.trim();
+  const direccion = document.getElementById('cli-direccion').value.trim();
+  const telefono  = document.getElementById('cli-telefono').value.trim();
+  const notas     = document.getElementById('cli-notas').value.trim();
+
+  let seleccionados = [];
+  let totalNum = 0;
+
+  MENU.forEach(cat => {
+    cat.items.forEach(item => {
+      const key = cat.cat + '|' + item.nombre;
+      const qty = cantidades[key] || 0;
+      if (qty > 0) {
+        seleccionados.push('  • ' + qty + 'x ' + item.nombre + ' (' + cat.cat + ')' + (item.precio > 0 ? ' — ' + fmt(item.precio * qty) : ''));
+        totalNum += item.precio * qty;
+      }
+    });
+  });
+
+  if (seleccionados.length === 0) {
+    alert('Por favor selecciona al menos un plato antes de enviar.');
+    return;
+  }
+
+  let msg = '🍚 *Pedido a domicilio — El Imperio del Arroz S&S*\n\n';
+  msg += '*👤 Nombre:* ' + nombre + '\n';
+  msg += '*📍 Dirección:* ' + direccion + '\n';
+  msg += '*📞 Teléfono:* ' + telefono + '\n\n';
+  msg += '*🛒 Platos pedidos:*\n' + seleccionados.join('\n') + '\n\n';
+  if (totalNum > 0) msg += '*💰 Total estimado:* ' + fmt(totalNum) + '\n\n';
+  if (notas) msg += '*📝 Notas:* ' + notas + '\n\n';
+  msg += '_Por favor confirmame el costo del domicilio. ¡Gracias!_';
+
+  window.open('https://wa.me/573132118757?text=' + encodeURIComponent(msg), '_blank');
+
+  localStorage.removeItem('imperioCarrito');
+  actualizarBadgeCarrito();
+});
+
+// Hamburguesa nav
+const btn = document.getElementById('btn-menu');
+const navMovil = document.getElementById('nav-movil');
+const iconoMenu = document.getElementById('icono-menu');
+const iconoX = document.getElementById('icono-x');
+btn.addEventListener('click', () => {
+  navMovil.classList.toggle('abierto');
+  iconoMenu.style.display = navMovil.classList.contains('abierto') ? 'none' : 'block';
+  iconoX.style.display = navMovil.classList.contains('abierto') ? 'block' : 'none';
+});
+
+if (Object.keys(carritoGuardado).length > 0) {
+  const aviso = document.getElementById('aviso-agregado');
+  if (aviso) {
+    aviso.style.display = 'inline-block';
+    setTimeout(() => { aviso.style.display = 'none'; }, 3500);
+  }
+}
+</script>
+</body>
+</html>
