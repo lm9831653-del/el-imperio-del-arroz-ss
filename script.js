@@ -63,10 +63,32 @@ function actualizarBadgeCarrito() {
   });
 }
 
+/* ---------- Selector de cantidad (+ / −) junto a cada plato ----------
+   Cada plato tiene un contador (.cant-valor) que el usuario puede
+   subir o bajar antes de darle a "Agregar", por si quiere pedir
+   varias unidades del mismo plato de una sola vez. */
+document.addEventListener('click', (e) => {
+  const btnMas = e.target.closest('.btn-cant-mas');
+  const btnMenos = e.target.closest('.btn-cant-menos');
+  if (!btnMas && !btnMenos) return;
+  e.preventDefault();
+
+  const selector = (btnMas || btnMenos).closest('.cant-selector');
+  if (!selector) return;
+  const valorSpan = selector.querySelector('.cant-valor');
+  let valor = parseInt(valorSpan.textContent, 10) || 1;
+
+  if (btnMas) valor = Math.min(valor + 1, 20);
+  if (btnMenos) valor = Math.max(valor - 1, 1);
+
+  valorSpan.textContent = String(valor);
+});
+
 /* ---------- Botones "Agregar" del menú ----------
    Cada botón .btn-agregar trae data-cat y data-nombre.
-   Al hacer clic: se guarda en el carrito y se muestra una
-   animación antes de ir a la página de domicilio. */
+   Al hacer clic: se guarda en el carrito la cantidad elegida
+   con el selector +/- y se muestra una animación antes de ir
+   a la página de domicilio. */
 document.addEventListener('click', (e) => {
   const btn = e.target.closest('.btn-agregar');
   if (!btn) return;
@@ -76,8 +98,14 @@ document.addEventListener('click', (e) => {
   const nombre = btn.dataset.nombre;
   if (!cat || !nombre) return;
 
-  agregarAlCarrito(cat, nombre, 1);
+  const acciones = btn.closest('.precio-card__acciones');
+  const valorSpan = acciones ? acciones.querySelector('.cant-valor') : null;
+  const cantidad = valorSpan ? (parseInt(valorSpan.textContent, 10) || 1) : 1;
+
+  agregarAlCarrito(cat, nombre, cantidad);
   actualizarBadgeCarrito();
+
+  if (valorSpan) valorSpan.textContent = '1';
 
   if (!btn.dataset.textoOriginal) btn.dataset.textoOriginal = btn.textContent;
   btn.classList.add('btn-agregar--ok');
