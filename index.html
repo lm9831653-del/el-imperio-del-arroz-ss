@@ -99,6 +99,44 @@
     </div>
   </section>
 
+  <div class="toast-horario" id="toast-horario" style="position:fixed;left:1rem;right:1rem;bottom:1rem;margin:0 auto;max-width:420px;background:#fff;border:1px solid #eee;border-radius:16px;box-shadow:0 8px 24px rgba(0,0,0,0.12);padding:1rem 1.1rem;display:flex;align-items:center;gap:0.75rem;z-index:999;transform:translateY(140%);transition:transform .35s ease;">
+    <span id="toast-horario-punto" style="flex-shrink:0;width:10px;height:10px;border-radius:50%;"></span>
+    <span id="toast-horario-texto" style="flex:1;font-size:0.85rem;color:#2b2b2b;line-height:1.4;"></span>
+    <button type="button" id="toast-horario-cerrar" aria-label="Cerrar aviso" style="flex-shrink:0;background:none;border:none;cursor:pointer;color:#888;font-size:1.1rem;line-height:1;padding:0.25rem;">✕</button>
+  </div>
+
+  <script>
+  (function() {
+    const ahoraBogota = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Bogota' }));
+    const dia = ahoraBogota.getDay();
+    const minutosAhora = ahoraBogota.getHours() * 60 + ahoraBogota.getMinutes();
+    const horaAperturaMin = (dia === 0) ? 12 * 60 : 11 * 60;
+    const horaCierreMin = 22 * 60 + 30;
+    const abierto = minutosAhora >= horaAperturaMin && minutosAhora < horaCierreMin;
+
+    if (!sessionStorage.getItem('avisoHorarioVisto')) {
+      const toast = document.getElementById('toast-horario');
+      const punto = document.getElementById('toast-horario-punto');
+      const texto = document.getElementById('toast-horario-texto');
+      if (toast && punto && texto) {
+        punto.style.background = abierto ? '#3ecf6a' : '#e05555';
+        texto.innerHTML = abierto
+          ? '<strong>Abierto</strong> — puedes pedir a domicilio ahora mismo.'
+          : '<strong>Cerrado</strong> — en este momento no podemos recibir pedidos.';
+        setTimeout(() => { toast.style.transform = 'translateY(0)'; }, 300);
+        sessionStorage.setItem('avisoHorarioVisto', '1');
+      }
+    }
+
+    const cerrarBtn = document.getElementById('toast-horario-cerrar');
+    if (cerrarBtn) {
+      cerrarBtn.addEventListener('click', () => {
+        document.getElementById('toast-horario').style.transform = 'translateY(140%)';
+      });
+    }
+  })();
+  </script>
+
   <!-- ESPECIALIDADES -->
   <section class="especialidades">
     <div class="contenedor">
